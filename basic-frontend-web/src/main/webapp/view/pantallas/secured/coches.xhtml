@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:ayfwk="http://www.valencia.es/ayWebFwk/ELFunctions" xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<f:view contentType="text/html" />
+
+<f:metadata>
+	<f:viewAction action="#{cochesController.initTablaCoches}" />
+</f:metadata>
+
+
+<h:body>
+
+	<ui:composition template="/view/layout/main_layout.xhtml">
+
+		<ui:param name="showFooterMainParam" value="false" />
+
+		<ui:param name="valenciano" value="#{!applicationController.valenciaFlag}" />
+
+		<ui:define name="content">
+			<h:form>
+
+				<p:dataTable id="tableListas" value="#{cochesController.coches}" var="dataItem" rowKey="#{dataItem.matricula}"
+					rows="25" rowsPerPageTemplate="25" scrollHeight="100%" paginator="true" paginatorPosition="bottom"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+					currentPageReportTemplate="#{msgfwk.page_label}" selectionMode="single"
+					selection="#{cochesController.cocheSeleccionado}" emptyMessage="#{msg.coches_datatable_empty}"
+					dblClickSelect="true" style="padding:20px 50px;">
+
+					<f:facet name="header">
+
+						<div style="float: left;">
+							<h:outputText value="#{msg.coches_tabla_titulo}" />
+							<i id="tableProgressIndicator" class="ayfwk-fa-progreso" style="visibility: hidden;" />
+						</div>
+
+						<div style="width: 100%; text-align: right;">
+
+							<h:panelGroup id="botoneraTablaCoches">
+
+								<!-- xmlns:sec="http://www.springframework.org/security/tags" -->
+								<!-- <sec:authorize access="hasRole('ROLE_RESPONSABLE')"> -->
+								<!-- <sec:authorize	access="hasPermission(@cochesController.cocheSeleccionadoId ,'es.valencia.taller.entity.Coche', 'RESERVAR')">-->
+
+								<!--  BOTON CREAR COCHE -->
+								<p:commandLink id="buttonAnadir" action="#{cochesController.buttonAnadir}"
+									styleClass="fa-commandlink fa-plus-circle" value="#{msg.anadir}">
+
+									<p:ajax event="dialogReturn" listener="#{cochesController.initTablaCoches}" update="tableListas" />
+
+								</p:commandLink>
+
+								<!--  BOTON EDITAR COCHE -->
+								<p:commandLink id="buttonEditar" action="#{cochesController.buttonEditar}" global="false"
+									styleClass="fa-commandlink fa-pencil-square-o" value="#{msg.editar}">
+									<p:ajax event="dialogReturn" listener="#{cochesController.initTablaCoches}" update="tableListas" />
+								</p:commandLink>
+
+								<!--  BOTON ELIMINAR COCHE -->
+								<p:commandLink id="buttonBorrar" action="#{cochesController.buttonBorrar}"
+									styleClass="fa-commandlink fa-trash-o" update="tableListas" value="#{msg.borrar}" />
+
+								<!--  BOTON RESERVAR COCHE -->
+								<p:commandLink id="buttonReservar" action="#{cochesController.buttonReservar}"
+									styleClass="fa-commandlink fa-trash-o" update="tableListas" value="#{msg.coches_reservar}" />
+
+								<p:commandLink id="buttonSalir" ajax="false" action="/view/default.xhtml?faces-redirect=true"
+									styleClass="fa-commandlink fa-times-circle-o" value="#{msg.salir}" />
+
+							</h:panelGroup>
+
+						</div>
+
+					</f:facet>
+
+					<p:ajax event="rowSelect" update="botoneraTablaCoches" global="false" onstart="visible('tableProgressIndicator')"
+						oncomplete="invisible('tableProgressIndicator')" />
+
+					<p:ajax event="rowUnselect" update="botoneraTablaCoches" global="false" onstart="visible('tableProgressIndicator')"
+						oncomplete="invisible('tableProgressIndicator')" />
+
+
+
+					<p:column headerText="" styleClass="alignTextCenter" style=" width:30px;" sortBy="#{dataItem.color}">
+						<!-- 		<span class="fa-stack fa-lg"> <i class="fa fa-circle fa-stack-2x" style="color: #{dataItem.color};" /> <i
+							class="fa fa-car fa-stack-1x fa-inverse" />
+						</span> -->
+						<i class="fa fa-car" style="color: ##{dataItem.color}" />
+					</p:column>
+
+					<p:column headerText="#{msg.coches_matricula}" styleClass="alignTextCenter" sortBy="#{dataItem.matricula}">
+						<h:outputText value="#{dataItem.matricula}" />
+					</p:column>
+
+					<p:column headerText="#{msg.coches_modelo}" styleClass="alignTextCenter" sortBy="#{dataItem.modelo}">
+						<h:outputText value="#{dataItem.modelo}" />
+					</p:column>
+
+					<p:column headerText="#{msg.coches_color}" styleClass="alignTextCenter" sortBy="#{dataItem.color}">
+						<h:outputText value="#{dataItem.color}" />
+					</p:column>
+
+					<p:column headerText="#{msg.coches_reserva}" styleClass="alignTextCenter" sortBy="#{dataItem.usuarioReserva}">
+						<h:outputText value="#{dataItem.usuarioReserva}" />
+					</p:column>
+
+				</p:dataTable>
+
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

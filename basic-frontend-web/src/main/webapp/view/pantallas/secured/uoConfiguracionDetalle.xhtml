@@ -1,0 +1,529 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:ayfwk="http://www.valencia.es/ayWebFwk/ELFunctions" xmlns:ay="http://www.valencia.es/aywebfwk/pf">
+
+<f:view contentType="text/html" />
+
+<f:metadata>
+	<f:viewParam id="uid" name="uid" value="#{uoConfiguracionDetalleController.uid}" />
+	<f:viewAction action="#{uoConfiguracionDetalleController.init}" />
+</f:metadata>
+
+<h:body>
+
+
+	<ui:composition template="/view/layout/dialog_layout.xhtml">
+
+		<ui:param name="dialogTitulo" value="#{msg.uo_conf_detalle_titulo}" />
+
+		<ui:define name="content">
+			<ay:messages id="messages" showDetail="true" showSummary="true" closable="true" globalOnly="false">
+				<p:autoUpdate />
+			</ay:messages>
+
+			<h:form id="configuracionUOForm">
+
+
+				<p:panel id="panelDatosBDO">
+
+					<f:facet name="header">
+						<h:outputText value="#{msg.uo_conf_detalle_datos_bdo}" />
+					</f:facet>
+
+					<div style="padding: 0px;">
+						<p:panelGrid styleClass="ui-noborder percent100">
+
+							<p:row>
+								<p:column style="width:370px; padding:0px;">
+									<p:panelGrid styleClass="ui-noborder percent100" columnClasses="px90 alignTextRight, alignTextLeft" columns="2">
+
+
+										<h:outputLabel value="#{msg.uo_conf_detalle_codigo_bdo}" />
+										<p:inputText styleClass="alignTextCenter codigo-bdo" value="#{uoConfiguracionDetalleController.unidadOrganizativa.codigoBDO}" readonly="true" disabled="true" />
+
+										<h:outputLabel value="#{msg.uo_conf_detalle_codigo_invariable}" />
+										<p:inputText styleClass="alignTextCenter codigo-invariable" value="#{uoConfiguracionDetalleController.unidadOrganizativa.codigoInvariable}" readonly="true"
+											disabled="true" />
+
+										<h:outputLabel value="#{msg.uo_conf_detalle_org_externo}" />
+										<p:inputText styleClass="alignTextCenter codigo-organico" value="#{uoConfiguracionDetalleController.unidadOrganizativa.codigoOrganicoExterno}" readonly="true"
+											disabled="true" />
+										<h:outputLabel value="#{msg.uo_conf_detalle_org_interno}" />
+										<p:inputText styleClass="alignTextCenter codigo-organico" value="#{uoConfiguracionDetalleController.unidadOrganizativa.codigoOrganicoInterno}" readonly="true"
+											disabled="true" />
+									</p:panelGrid>
+
+									<div class="alignTextCenter" style="padding-top: 10px;">
+										<p:selectBooleanCheckbox itemLabel="#{msg.uo_conf_detalle_vigente}" value="#{uoConfiguracionDetalleController.unidadOrganizativa.vigente}" readonly="true" disabled="true" />
+
+										<p:selectBooleanCheckbox itemLabel="#{msg.uo_conf_detalle_unidad_primer_nivel}" style="padding-left:20px;"
+											value="#{uoConfiguracionDetalleController.unidadOrganizativa.primerNivel}" readonly="true" disabled="true" />
+
+									</div>
+								</p:column>
+
+								<p:column styleClass="alignTop">
+
+									<h:outputLabel value="#{msg.uo_conf_detalle_descripcion_cas}" style="display:block;margin-bottom:2px" />
+
+									<p:panel styleClass="percent100 ui-state-disabled" style="margin-bottom:10px; padding:3px 3px;">
+
+										<h:outputLabel id="nombreUnidadCas" styleClass="percent100 uoconf-unidad-nombre " value="#{uoConfiguracionDetalleController.unidadOrganizativa.nombreUnidadCas}" />
+
+										<h:outputLabel id="responsableCas" styleClass="percent100 uoconf-responsable"
+											value="Resp: #{uoConfiguracionDetalleController.unidadOrganizativa.responsable.nombreCompleto}" />
+
+										<h:outputLabel id="cargoCas" styleClass="percent100 uoconf-cargo"
+											value="#{msg.uo_conf_detalle_cargo} #{uoConfiguracionDetalleController.unidadOrganizativa.responsable.nombreCargoCas}" />
+
+									</p:panel>
+
+									<h:outputLabel value="#{msg.uo_conf_detalle_descripcion_val}" style="display:block;margin-bottom:2px" />
+
+									<p:panel styleClass="percent100 ui-state-disabled" style=" padding:3px 3px;">
+
+										<h:outputLabel id="nombreUnidadVal" styleClass="percent100 uoconf-unidad-nombre" value="#{uoConfiguracionDetalleController.unidadOrganizativa.nombreUnidadVal}" />
+
+										<h:outputLabel id="responsableVal" styleClass="percent100 uoconf-responsable"
+											value="Resp: #{uoConfiguracionDetalleController.unidadOrganizativa.responsable.nombreCompleto}" />
+
+										<h:outputLabel id="cargoVal" styleClass="percent100 uoconf-cargo"
+											value="#{msg.uo_conf_detalle_cargo} #{uoConfiguracionDetalleController.unidadOrganizativa.responsable.nombreCargoVal}" />
+
+									</p:panel>
+
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+
+
+					</div>
+				</p:panel>
+
+				<p:panel id="panelConfiguracion" styleClass="panel-conf-unidad">
+
+					<f:facet name="header">
+
+						<div style="text-align: left; width: 100%">
+
+							<h:outputText value="#{msg.uo_conf_detalle_parametros_configuracion}" />
+							<i id="panelProgressIndicator" class="ayfwk-fa-progreso" style="visibility: hidden;" />
+							<div style="float: right; text-align: right;">
+
+								<p:commandLink id="buttonGuardar" action="#{uoConfiguracionDetalleController.checkModificaciones}" styleClass="fa-commandlink fa-save">
+
+									<h:outputText value="#{msg.guardar}" />
+
+								</p:commandLink>
+
+								<p:commandLink id="buttonSalir" action="#{uoConfiguracionDetalleController.buttonSalir}" styleClass="fa-commandlink fa-times-circle">
+
+									<h:outputText value="#{msg.salir}" />
+
+								</p:commandLink>
+
+							</div>
+						</div>
+					</f:facet>
+
+					<p:fieldset id="fieldsetEnvioRecepcion" legend="#{msg.uo_conf_detalle_envio_recepcion}" styleClass="ayfwk-fieldset">
+
+						<p:panelGrid columns="2" styleClass="ui-noborder" style="width: 450px;margin-left: auto;margin-right: auto;">
+
+							<p:selectBooleanCheckbox itemLabel="#{msg.uo_conf_detalle_emitir_ni}" value="#{uoConfiguracionDetalleController.unidadOrganizativa.emisoraNI}" style="width: 150px;">
+								<p:ajax update="checkAmbitoRestringidoEnvio" global="false" onstart="visible('panelProgressIndicator');" oncomplete="invisible('panelProgressIndicator');" />
+							</p:selectBooleanCheckbox>
+
+							<p:selectBooleanCheckbox id="checkAmbitoRestringidoEnvio" itemLabel="#{msg.uo_conf_detalle_emitir_ni_solo_ambito_primer_nivel}"
+								value="#{uoConfiguracionDetalleController.unidadOrganizativa.ambitoRestringidoEnvio}"
+								disabled="#{uoConfiguracionDetalleController.unidadOrganizativa.primerNivel or (!uoConfiguracionDetalleController.unidadOrganizativa.emisoraNI)}" />
+
+							<p:selectBooleanCheckbox value="#{uoConfiguracionDetalleController.unidadOrganizativa.receptoraNI}" itemLabel="#{msg.uo_conf_detalle_recibir_ni}">
+								<p:ajax update="checkAmbitoRestringidoRecepcion" global="false" onstart="visible('panelProgressIndicator');" oncomplete="invisible('panelProgressIndicator');" />
+							</p:selectBooleanCheckbox>
+
+							<p:selectBooleanCheckbox id="checkAmbitoRestringidoRecepcion" itemLabel="#{msg.uo_conf_detalle_visible_solo_ambito_primer_nivel}"
+								value="#{uoConfiguracionDetalleController.unidadOrganizativa.ambitoRestringidoRecepcion}"
+								disabled="#{uoConfiguracionDetalleController.unidadOrganizativa.primerNivel or (!uoConfiguracionDetalleController.unidadOrganizativa.receptoraNI)}" />
+
+						</p:panelGrid>
+					</p:fieldset>
+
+					<p:fieldset id="fieldGestionPersonal" legend="#{msg.uo_conf_detalle_gestion_personal}" style="margin-top:5px;" styleClass="ayfwk-fieldset">
+
+						<p:tabView id="panelTab" styleClass="ayfwk-tab-view" cache="false" dynamic="false">
+
+							<p:tab id="tabGestores" title="#{msg.uo_conf_detalle_gestores}">
+
+								<div class="nota-usuario">
+									<h:outputText value="#{msg.uo_detalle_gestores_nota}" />
+								</div>
+
+								<p:dataTable id="tableGestores" widgetVar="tableGestores" var="gestor" value="#{uoConfiguracionDetalleController.unidadOrganizativa.gestores}" selectionMode="multiple"
+									sortMode="single" selection="#{uoConfiguracionDetalleController.gestoresRemove}" rowKey="#{gestor.usuario}" scrollable="true" scrollHeight="115"
+									emptyMessage="#{msg.uo_conf_gestores_empty_table}" styleClass="ayfwk-datatable-noheader uoconf-table-personal"
+									disabledSelection="#{uoConfiguracionDetalleController.isGestoresDisabled()}" filteredValue="#{uoConfiguracionDetalleController.gestoresFiltered}">
+
+									<f:facet name="header">
+
+										<div align="left" class="uoconf-table-personal-filtro">
+
+											<p:inputText id="globalFilter" onkeyup="PF('tableGestores').filter()" styleClass="arquetipo-globalFilter" placeholder="#{msg.filtrar}" />
+
+											<div class="uoconf-table-personal-progress">
+												<i id="tableGestoresProgress" style="height: 12px; visibility: hidden;" class="ayfwk-fa-progreso ayfwk-toolbar-ajaxprogress" />
+											</div>
+
+											<div align="right" class="uoconf-table-personal-acciones">
+
+												<p:commandLink id="buttonAddGestores" actionListener="#{uoConfiguracionDetalleController.initDialogSeleccionPersonal('GESTOR')}"
+													oncomplete="PF('dialogSeleccionPersonal').show(); PF('dialogSustituto').hide()" styleClass="fa-commandlink fa-plus-circle"
+													update=":uoConfPersonalForm:personalResultTable" disabled="#{uoConfiguracionDetalleController.isGestoresDisabled()}">
+
+													<h:outputText value="#{msg.uo_conf_detalle_anyadir}" />
+												</p:commandLink>
+
+												<p:commandLink id="buttonRemoveGestores" widgetVar="buttonRemoveGestores" action="#{uoConfiguracionDetalleController.buttonRemoveGestores}"
+													styleClass="fa-commandlink fa-trash" process="@this" update=":configuracionUOForm:panelTab:tableGestores :uoConfPersonalForm:personalResultTable"
+													disabled="#{uoConfiguracionDetalleController.gestoresRemove.size()==0 or uoConfiguracionDetalleController.isGestoresDisabled()}" global="false">
+
+													<h:outputText value="#{msg.uo_conf_detalle_eliminar}" />
+												</p:commandLink>
+
+											</div>
+										</div>
+
+
+
+									</f:facet>
+
+
+									<p:ajax event="rowSelect" update=":configuracionUOForm:panelTab:tableGestores:buttonRemoveGestores" process="@this" global="false"
+										onstart="visible('tableGestoresProgress')" oncomplete="invisible('tableGestoresProgress')" />
+
+									<p:ajax event="rowUnselect" update=":configuracionUOForm:panelTab:tableGestores:buttonRemoveGestores" global="false" onstart="visible('tableGestoresProgress')"
+										oncomplete="invisible('tableGestoresProgress')" />
+
+									<p:ajax event="filter" global="false" onstart="visible('tableGestoresProgress')" oncomplete="invisible('tableGestoresProgress')" />
+
+									<p:column filterBy="#{gestor.descripcionFilter}" filterStyleClass="hideFilter" filterMatchMode="contains">
+										<h:outputText styleClass="uoconf-gestorId" value="#{gestor.usuario}" /> - 
+										<h:outputText styleClass="uoconf-gestorDescripcion" value="#{gestor.nombreCompleto}" />
+									</p:column>
+								</p:dataTable>
+
+							</p:tab>
+
+							<p:tab id="tabFirmantes" title="#{msg.uo_conf_detalle_firmantes}">
+
+								<div class="nota-usuario">
+									<h:outputText value="#{msg.uo_conf_firmantes_nota}" />
+								</div>
+
+								<p:dataTable id="tableFirmantes" widgetVar="tableFirmantes" var="sust" value="#{uoConfiguracionDetalleController.unidadOrganizativa.sustitutos}" selectionMode="multiple"
+									sortMode="single" rowKey="#{sust.usuario}" selection="#{uoConfiguracionDetalleController.sustitutosRemove}" scrollable="true" scrollHeight="127"
+									emptyMessage="#{msg.uo_conf_firmantes_empty_table}" styleClass="ayfwk-datatable-noheader uoconf-sustitutoTable uoconf-table-personal"
+									disabledSelection="#{uoConfiguracionDetalleController.isGestoresDisabled()}" filteredValue="#{uoConfiguracionDetalleController.sustitutosFiltered}">
+
+									<f:facet name="header" style="display:table;">
+
+										<div align="left" class="uoconf-table-personal-filtro">
+
+											<p:inputText id="globalFilter" onkeyup="PF('tableFirmantes').filter()" styleClass="arquetipo-globalFilter" placeholder="#{msg.filtrar}" />
+											<div class="uoconf-table-personal-progress">
+												<i id="tableFirmantesProgress" class="ayfwk-fa-progreso ayfwk-toolbar-ajaxprogress" style="visibility: hidden;" />
+											</div>
+
+											<div align="right" class="uoconf-table-personal-acciones">
+
+												<h:panelGroup id="menuTablaFirmantes">
+													<p:commandLink id="buttonAddFirmantes" actionListener="#{uoConfiguracionDetalleController.initDialogSeleccionPersonal('SUSTITUTO')}"
+														oncomplete="PF('dialogSustituto').show()" styleClass="fa-commandlink fa-plus-circle"
+														update=":uoConfPersonalForm:personalResultTable :uoConfsustitutosForm:panelSustituto" disabled="#{uoConfiguracionDetalleController.isGestoresDisabled()}">
+														<h:outputText value="#{msg.uo_conf_detalle_anyadir}" />
+													</p:commandLink>
+
+													<p:commandLink id="buttonEditarFirmante" action="#{uoConfiguracionDetalleController.buttonEditarSustituto}" oncomplete="PF('dialogSustituto').show()"
+														styleClass="fa-commandlink fa-trash" process="@this" update=":configuracionUOForm:panelTab:tableFirmantes :uoConfsustitutosForm:panelSustituto"
+														disabled="#{uoConfiguracionDetalleController.sustitutosRemove.size()!=1 or uoConfiguracionDetalleController.isGestoresDisabled()}">
+														<h:outputText value="#{msg.editar}" />
+													</p:commandLink>
+
+													<p:commandLink id="buttonRemoveFirmantes" action="#{uoConfiguracionDetalleController.buttonRemoveSustitutos}" styleClass="fa-commandlink fa-trash" process="@this"
+														update=":configuracionUOForm:panelTab:tableFirmantes"
+														disabled="#{uoConfiguracionDetalleController.sustitutosRemove.size()==0 or uoConfiguracionDetalleController.isGestoresDisabled()}" global="false">
+														<h:outputText value="#{msg.uo_conf_detalle_eliminar}" />
+													</p:commandLink>
+												</h:panelGroup>
+											</div>
+										</div>
+
+
+
+									</f:facet>
+
+									<p:ajax event="rowSelect" update=":configuracionUOForm:panelTab:tableFirmantes:menuTablaFirmantes" process="@this" global="false"
+										onstart="visible('tableFirmantesProgress')" oncomplete="invisible('tableFirmantesProgress')" />
+
+									<p:ajax event="rowUnselect" update=":configuracionUOForm:panelTab:tableFirmantes:menuTablaFirmantes" global="false" onstart="visible('tableFirmantesProgress')"
+										oncomplete="invisible('tableFirmantesProgress')" />
+
+									<p:ajax event="filter" global="false" onstart="visible('tableFirmantesProgress')" oncomplete="invisible('tableFirmantesProgress')" />
+
+									<p:column filterBy="#{sust.descripcionFilter}" filterStyleClass="hideFilter" filterMatchMode="contains">
+
+										<h:outputText styleClass="uoconf-sustitutoDescripcion" value="#{sust.nombreCompleto}" />
+
+										<h:outputText styleClass="uoconf-sustitutoId" value=" (#{sust.usuario}) " />
+
+										<h:outputText styleClass="uoconf-sustitutoCargo" value="#{msg.uo_conf_sustituto_cargo_cas}   #{sust.nombreCargoCas}" />
+
+										<h:outputText styleClass="uoconf-sustitutoCargo" value="#{msg.uo_conf_sustituto_cargo_val}   #{sust.nombreCargoVal}" />
+
+									</p:column>
+
+								</p:dataTable>
+
+							</p:tab>
+
+
+							<p:tab id="tabDeshabilitados" title="#{msg.uo_conf_detalle_personal_deshabilitado}">
+
+								<p:dataTable id="tableDeshabilitados" widgetVar="tableDeshabilitados" var="redactor" value="#{uoConfiguracionDetalleController.unidadOrganizativa.redactoresDeshabilitados}"
+									selectionMode="multiple" sortMode="single" selection="#{uoConfiguracionDetalleController.deshabilitadosRemove}" rowKey="#{redactor.usuario}" scrollable="true"
+									scrollHeight="149" emptyMessage="#{msg.uo_conf_deshabilitados_empty_table}" styleClass="ayfwk-datatable-noheader uoconf-table-personal"
+									filteredValue="#{uoConfiguracionDetalleController.deshabilitadosFiltered}">
+
+									<f:facet name="header">
+
+										<div align="left" class="uoconf-table-personal-filtro">
+
+											<p:inputText id="globalFilter" onkeyup="PF('tableDeshabilitados').filter()" styleClass="arquetipo-globalFilter" placeholder="#{msg.filtrar}" />
+
+											<div class="uoconf-table-personal-progress">
+
+												<i id="tableDeshabilitadosProgress" class="ayfwk-fa-progreso" style="visibility: hidden;" />
+
+											</div>
+
+											<div align="right" class="uoconf-table-personal-acciones">
+
+												<p:commandLink id="buttonAddDeshabilitados" actionListener="#{uoConfiguracionDetalleController.initDialogSeleccionPersonal('DESHABILITADO')}"
+													oncomplete="PF('dialogSeleccionPersonal').show()" styleClass="fa-commandlink fa-plus-circle" update=":uoConfPersonalForm"
+													disabled="#{uoConfiguracionDetalleController.isGestoresDisabled()}">
+													<h:outputText value="#{msg.uo_conf_detalle_anyadir}" />
+												</p:commandLink>
+
+												<p:commandLink id="buttonRemoveDeshabilitados" widgetVar="buttonRemoveDeshabilitados" action="#{uoConfiguracionDetalleController.buttonRemoveDeshabilitados}"
+													styleClass="fa-commandlink fa-trash" process="@this"
+													disabled="#{uoConfiguracionDetalleController.deshabilitadosRemove.size()==0 or uoConfiguracionDetalleController.isGestoresDisabled()}"
+													update=":configuracionUOForm:panelTab:tableDeshabilitados :uoConfPersonalForm:personalResultTable" global="false">
+													<h:outputText value="#{msg.uo_conf_detalle_eliminar}" />
+												</p:commandLink>
+
+											</div>
+
+										</div>
+
+									</f:facet>
+
+									<p:ajax event="rowSelect" update=":configuracionUOForm:panelTab:tableDeshabilitados:buttonRemoveDeshabilitados" process="@this" global="false"
+										onstart="visible('tableDeshabilitadosProgress')" oncomplete="invisible('tableDeshabilitadosProgress')" />
+
+									<p:ajax event="rowUnselect" update=":configuracionUOForm:panelTab:tableDeshabilitados:buttonRemoveDeshabilitados" global="false"
+										onstart="visible('tableDeshabilitadosProgress')" oncomplete="invisible('tableDeshabilitadosProgress')" />
+
+									<p:ajax event="filter" global="false" onstart="visible('tableDeshabilitadosProgress')" oncomplete="invisible('tableDeshabilitadosProgress')" />
+
+									<p:column filterBy="#{sust.descripcionFilter}" filterStyleClass="hideFilter" filterMatchMode="contains">
+										<h:outputText styleClass="uoconf-gestorId" value="#{redactor.usuario}" /> - 
+										<h:outputText styleClass="uoconf-gestorDescripcion" value="#{redactor.nombreCompleto}" />
+									</p:column>
+
+								</p:dataTable>
+
+							</p:tab>
+
+						</p:tabView>
+
+					</p:fieldset>
+
+				</p:panel>
+
+				<p:commandButton style="display: none;" id="buttonConfirmarSalida" widgetVar="buttonConfirmarSalida" actionListener="#{uoConfiguracionDetalleController.salirAction}">
+
+					<p:confirm icon="fa fa-confirm-dialog fa-info-circle" header="#{msg.dialog_confirmacion_titulo}" message="#{msg.uo_conf_confirmacion_unidad_modidificada}" />
+
+				</p:commandButton>
+
+
+				<p:commandButton style="display: none;" id="buttonConfirmarGuardado" widgetVar="buttonConfirmarGuardado"
+					actionListener="#{uoConfiguracionDetalleController.guardarModificaciones}" update="@form" global="true">
+
+					<p:confirm icon="fa fa-confirm-dialog fa-info-circle" header="#{msg.dialog_confirmacion_titulo}" message="#{msg.uo_conf_guardar_modificaciones_visibilidad}" />
+
+				</p:commandButton>
+
+
+			</h:form>
+
+
+			<p:confirmDialog global="true" closeOnEscape="true" width="600" style="    text-align: center;">
+
+				<p:commandButton value="#{msg.dialog_confirmacion_si}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+
+				<p:commandButton value="#{msg.dialog_confirmacion_no}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+
+			</p:confirmDialog>
+
+			<p:dialog global="true" closeOnEscape="true" widgetVar="dialogSustituto" modal="true" resizable="false" height="150px" width="700" header="#{msg.uo_conf_seleccion_firmantes}">
+
+
+				<p:ajax event="close" listener="#{uoConfiguracionDetalleController.handleCloseDialogSustituto}" update=":uoConfsustitutosForm:panelSustituto" />
+
+				<p:messages id="messagesSustituto" for="messagesSustituto" styleClass="aywebfwk-float-dialog-message" showDetail="true" showSummary="false" autoUpdate="true" closable="true" />
+
+				<h:form id="uoConfsustitutosForm">
+
+
+					<p:panel style="width:100%;">
+
+						<f:facet name="header">
+
+							<div align="left" style="display: block; float: left;">
+								<h:outputText value="#{msg.uo_conf_detalle_parametros_configuracion}" />
+								<i id="sustitutoProgressIndicator" class="ayfwk-fa-progreso" style="display: none; margin-right: 5px;" />
+							</div>
+
+							<div align="right" style="display: block; float: right;">
+
+								<p:commandLink id="buttonAceptarSustituto" action="#{uoConfiguracionDetalleController.buttonAceptarSustituto}"
+									oncomplete="if (args.isSustituoSeleccionado ) { PF('dialogSustituto').hide(); }" update=":configuracionUOForm:panelTab:tableFirmantes" styleClass="fa-commandlink fa-save">
+
+									<h:outputText value="#{msg.aceptar}" />
+
+								</p:commandLink>
+
+								<p:commandLink id="buttonSalirSustituto" oncomplete="PF('dialogSustituto').hide();PF('tableFirmantes').filter();" update=":configuracionUOForm:panelTab:tableFirmantes"
+									styleClass="fa-commandlink fa-times-circle" process="@this">
+
+									<h:outputText value="#{msg.salir}" />
+
+								</p:commandLink>
+
+							</div>
+
+						</f:facet>
+
+						<p:panelGrid id="panelSustituto" columns="2" style="width:100%;" columnClasses="px150 alignTextRight," styleClass="ui-noborder">
+
+							<h:outputLabel value="#{msg.uo_conf_detalle_firmante}" styleClass="comunicacion-label" />
+
+							<p:autoComplete id="autoCompleteSustituto" value="#{uoConfiguracionDetalleController.sustitutoSeleccionadoId}" var="sustituto" queryDelay="200"
+								itemLabel="#{ empty  sustituto.usuario  ? sustituto.nombreCompleto : ''.concat(sustituto.usuario).concat(' - ').concat(sustituto.nombreCompleto) }" itemValue="#{sustituto}"
+								converter="usuarioViewConverter" dropdown="true" completeMethod="#{uoConfiguracionDetalleController.completeSustitutos}" forceSelection="true" scrollHeight="300"
+								panelStyleClass="autocomplete-usuario-panel" styleClass="autocomplete-usuario" disabled="#{uoConfiguracionDetalleController.editandoSustituto}">
+
+								<p:ajax event="query" global="false" onstart="$('#sustitutoProgressIndicator').show()" oncomplete="$('#sustitutoProgressIndicator').hide()" />
+
+								<p:column styleClass="autocomplete-usuario-item-cod" sytle="width: 50px;">
+									<h:outputText value="#{sustituto.usuario}" />
+								</p:column>
+
+								<p:column styleClass="autocomplete-usuario-item-descripcion">
+									<h:outputText value="#{sustituto.nombreCompleto}" />
+								</p:column>
+
+							</p:autoComplete>
+
+							<h:outputLabel value="#{msg.uo_conf_titulo_cas}" />
+
+							<p:inputText id="inputSustitutoCargoCas" style="width:100%;" value="#{uoConfiguracionDetalleController.sustitutoSeleccionado.nombreCargoCas}" maxlength="100" />
+
+							<h:outputLabel value="#{msg.uo_conf_titulo_val}" />
+
+							<p:inputText id="inputSustitutoCargoVal" style="width:100%;" value="#{uoConfiguracionDetalleController.sustitutoSeleccionado.nombreCargoVal}" maxlength="100" />
+
+						</p:panelGrid>
+
+					</p:panel>
+
+				</h:form>
+
+			</p:dialog>
+
+
+			<p:dialog global="true" closeOnEscape="true" widgetVar="dialogSeleccionPersonal" modal="true" resizable="false" height="525" width="750"
+				header="#{msg.uo_conf_seleccion_personal}">
+
+				<p:ajax event="close" onstart="PF('personalResultTable').clearFilters();" />
+
+				<h:form id="uoConfPersonalForm">
+
+					<p:remoteCommand name="aceptarPersonalSeleccionado" global="false" actionListener="#{uoConfiguracionDetalleController.buttonPersonalAceptar}"
+						oncomplete="PF('dialogSeleccionPersonal').hide()" />
+
+					<p:dataTable id="personalResultTable" widgetVar="personalResultTable" var="dataItem" value="#{uoConfiguracionDetalleController.getPersonal()}" selectionMode="multiple"
+						sortMode="single" selection="#{uoConfiguracionDetalleController.personalAdd}" rowKey="#{dataItem.usuario}" scrollable="true" scrollHeight="462"
+						emptyMessage="#{msg.uo_conf_gestores_empty_table}" filteredValue="#{uoConfiguracionDetalleController.personalFiltered}">
+
+						<f:facet style="height: 20px;" name="header">
+
+
+
+							<h:outputLabel value="#{msg.filtro}" for="globalFilter" />
+							<p:inputText id="globalFilter" styleClass="arquetipo-globalFilter" onkeyup="PF('personalResultTable').filter()" style="margin: 0px 10px;" />
+							<i id="personalProgressIndicator" class="ayfwk-fa-progreso" style="visibility: hidden;" />
+
+
+							<div style="display: block; float: right;">
+								<p:commandLink id="buttonPersonalAceptar" global="false" onclick="aceptarPersonalSeleccionado();" disabled="#{uoConfiguracionDetalleController.personalAddNotSelected}"
+									styleClass="fa-commandlink fa-check-circle">
+
+									<h:outputText value="#{msgfwk.linkAccept}" />
+
+								</p:commandLink>
+
+								<p:commandLink id="buttonPersonalSalir" oncomplete="PF('dialogSeleccionPersonal').hide()"
+									update=":configuracionUOForm:panelTab:tableFirmantes :configuracionUOForm:panelTab:tableDeshabilitados" styleClass="fa-commandlink fa-times-circle" process="@this">
+
+									<h:outputText value="#{msg.salir}" />
+
+								</p:commandLink>
+
+							</div>
+
+						</f:facet>
+
+						<p:ajax event="rowDblselect" oncomplete="aceptarPersonalSeleccionado();" />
+
+						<p:ajax event="rowSelect" global="false" update=":uoConfPersonalForm:personalResultTable:buttonPersonalAceptar" process="@this" onstart="visible('personalProgressIndicator')"
+							oncomplete="invisible('personalProgressIndicator')" />
+
+						<p:ajax event="filter" global="false" onstart="visible('personalProgressIndicator')" oncomplete="invisible('personalProgressIndicator')" />
+
+						<p:column headerText="#{msg.uo_conf_personal_usuario}" filterBy="#{dataItem.usuario}" filterStyleClass="hideFilter" filterMatchMode="contains" width="75">
+
+							<h:outputText value="#{dataItem.usuario}" />
+						</p:column>
+
+						<p:column headerText="#{msg.uo_conf_personal_nombre}" filterBy="#{dataItem.nombreCompleto}" filterStyleClass="hideFilter" filterMatchMode="contains">
+
+							<h:outputText value="#{dataItem.nombreCompleto}" />
+						</p:column>
+
+					</p:dataTable>
+
+				</h:form>
+
+			</p:dialog>
+
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+
+</html>

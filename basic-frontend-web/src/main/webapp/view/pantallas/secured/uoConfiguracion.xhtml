@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:ayfwk="http://www.valencia.es/ayWebFwk/ELFunctions">
+<f:view contentType="text/html" />
+
+<f:metadata>
+	<f:viewAction action="#{uoConfiguracionController.init}" />
+</f:metadata>
+
+<h:body>
+
+	<ui:composition template="/view/layout/main_layout.xhtml">
+		<ui:param name="showFooterMainParam" value="false" />
+
+		<ui:param name="valenciano" value="#{!applicationController.valenciaFlag}" />
+
+		<ui:define name="content">
+
+			<h:form id="configuracionUOListaForm">
+
+				<p:defaultCommand target="unidadSearchtButton" />
+
+				<p:panel id="uoConfiguracionPanel" styleClass="crudModalWrapper">
+
+					<f:facet name="header">
+
+						<div align="left" style="display: block; float: left;">
+							<h:outputText value="#{msg.uo_conf_titulo}" />
+						</div>
+						<div align="right" style="display: block; float: right;">
+							<p:commandLink id="buttonSalir" ajax="false" action="/view/default.xhtml?faces-redirect=true" styleClass="fa-commandlink fa-times-circle">
+								<h:outputText value="#{msg.salir}" />
+							</p:commandLink>
+						</div>
+					</f:facet>
+
+
+
+					<p:outputPanel styleClass="crudOutputPanel">
+
+
+						<h:panelGroup id="criteriosPanel">
+							<div id="unidadCriteriaList" class="criteriaBody percent90 alignTextCenter" style="height: 35px;">
+
+								<div class="criteriaBodyLabel">
+									<h:outputLabel value="#{msg.cod_organico_externo}" for="filter_codorg_externo" />
+								</div>
+
+								<div class="criteriaBodyInput" style="margin-left: 2px;">
+									<h:inputText id="filter_codorg_externo" value="#{uoConfiguracionController.filtroCodOrganicoExterno}" style="width: 100px;">
+									</h:inputText>
+								</div>
+
+								<div class="criteriaBodyLabel" style="margin-left: 5px;">
+									<h:outputLabel value="#{msg.nombre_unidad}" for="filter_unidad_nombre" />
+								</div>
+
+								<div class="criteriaBodyInput" style="margin-left: 2px; margin-right: 5px;">
+									<h:inputText id="filter_unidad_nombre" value="#{uoConfiguracionController.filtroNombreUnidad}" style="width: 325px;">
+									</h:inputText>
+								</div>
+
+								<div class="criteriaBodyButton" style="margin-left: 5px; margin-right: 5px;">
+									<p:commandButton id="unidadSearchtButton" value="#{msgfwk.linkSearch}" action="#{uoConfiguracionController.filtrarUnidades}" icon="fa-button fa-search"
+										update="unidadResultTable, :configuracionUOListaForm:unidadResultTable:botoneraTablaUnidades" process="@form" />
+								</div>
+
+								<div class="criteriaBodyButton" style="margin-left: 2px; margin-right: 5px;">
+									<p:commandButton id="unidadResetButton" value="#{msgfwk.resetButton}" action="#{uoConfiguracionController.resetFilterSearch}" icon="fa-button fa-sync"
+										update="criteriosPanel, unidadResultTable, :configuracionUOListaForm:unidadResultTable:botoneraTablaUnidades" process="@this" />
+								</div>
+
+							</div>
+
+						</h:panelGroup>
+
+						<p:dataTable id="unidadResultTable" value="#{uoConfiguracionController.listaUnidadesFiltradas}" var="dataItem" rowKey="#{dataItem.uid}" rows="19" paginator="true"
+							paginatorPosition="bottom" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" currentPageReportTemplate="#{msgfwk.page_label}"
+							sortMode="single" selectionMode="single" selection="#{uoConfiguracionController.unidadSeleccionada}" emptyMessage="#{msg.unidadorganizativa_datatable_empty}">
+
+
+							<f:facet name="header">
+
+								<h:outputText value="#{msg.uo_conf_unidades_organizativas}" />
+								<i id="tableProgressIndicator" class="ayfwk-fa-progreso" style="visibility: hidden;" />
+
+
+								<div style="display: block; float: right;">
+									<h:panelGroup id="botoneraTablaUnidades">
+
+										<p:commandLink id="buttonConfigurar" action="#{uoConfiguracionController.buttonConfigurar}" styleClass="fa-commandlink fa-pencil-alt"
+											disabled="#{uoConfiguracionController.unidadNotSelected}">
+											<h:outputText value="#{msg.uo_conf_configurar}" />
+										</p:commandLink>
+
+									</h:panelGroup>
+								</div>
+							</f:facet>
+
+
+							<p:ajax event="rowSelect" update=":configuracionUOListaForm:unidadResultTable:botoneraTablaUnidades" global="false" onstart="visible('tableProgressIndicator')"
+								oncomplete="invisible('tableProgressIndicator')" />
+
+							<p:ajax event="rowUnselect" update=":configuracionUOListaForm:unidadResultTable:botoneraTablaUnidades" global="false" onstart="visible('tableProgressIndicator')"
+								oncomplete="invisible('tableProgressIndicator')" />
+
+							<p:ajax event="rowDblselect" oncomplete="clickButtonId('#{p:component('buttonConfigurar')}')" />
+
+							<p:column sortBy="#{dataItem.codigoOrganicoExterno}" headerText="#{msg.cod_organico_externo}" width="75">
+								<h:outputText value="#{dataItem.codigoOrganicoExterno}" />
+							</p:column>
+
+
+							<p:column sortBy="#{dataItem.nombreUnidadCas}" headerText="#{msg.nombre_unidad}" rendered="#{!valenciano}">
+								<h:outputText value="#{dataItem.nombreUnidadCas==null? msg.uo_conf_unidad_sin_desc : dataItem.nombreUnidadCas }" />
+							</p:column>
+
+							<p:column sortBy="#{dataItem.nombreUnidadVal}" headerText="#{msg.nombre_unidad}" rendered="#{valenciano}">
+								<h:outputText value="#{dataItem.nombreUnidadVal==null? msg.uo_conf_unidad_sin_desc : dataItem.nombreUnidadVal }" />
+							</p:column>
+
+						</p:dataTable>
+
+					</p:outputPanel>
+
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

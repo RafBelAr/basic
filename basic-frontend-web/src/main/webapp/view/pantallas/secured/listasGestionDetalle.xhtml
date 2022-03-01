@@ -1,0 +1,248 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:ayfwk="http://www.valencia.es/ayWebFwk/ELFunctions" xmlns:ay="http://www.valencia.es/aywebfwk/pf">
+<f:view contentType="text/html" />
+
+<f:metadata>
+	<f:viewParam id="nombreCas" name="nombreCas" value="#{listasGestionDetalleController.nombreCas}" />
+	<f:viewParam id="uidPropietaria" name="uidPropietaria" value="#{listasGestionDetalleController.uidPropietaria}" />
+	<f:viewAction action="#{listasGestionDetalleController.init}" />
+</f:metadata>
+
+<h:body>
+
+	<ui:composition template="/view/layout/dialog_layout.xhtml">
+
+		<ui:param name="dialogTitulo" value="#{msg.listas_gestion_detalle_titulo}" />
+		<ui:param name="valenciano" value="#{!applicationController.valenciaFlag}" />
+
+		<ui:define name="content">
+
+			<ay:messages id="messages" showDetail="true" showSummary="true" closable="true" globalOnly="false">
+				<p:autoUpdate />
+			</ay:messages>
+
+			<h:form id="edicionListaForm">
+
+				<p:panel id="panelDatosBDO">
+
+					<f:facet name="header">
+
+						<div align="left" style="display: block; float: left;">
+							<h:outputText value="#{msg.listas_gestion_detalle_datos_lista}" />
+						</div>
+						<div align="right" style="display: block; float: right;">
+
+							<p:commandLink id="buttonGuardar" action="#{listasGestionDetalleController.buttonGuardar}" update="@form" process="@form" styleClass="fa-commandlink fa-save">
+								<h:outputText value="#{msg.guardar}" />
+							</p:commandLink>
+
+							<p:commandLink id="buttonSalir" action="#{listasGestionDetalleController.buttonSalir}" process="@this" styleClass="fa-commandlink fa-times-circle">
+								<h:outputText value="#{msg.salir}" />
+							</p:commandLink>
+
+						</div>
+
+					</f:facet>
+
+
+
+					<p:panelGrid styleClass="ui-noborder" style="width:100%">
+
+						<p:row>
+							<p:column styleClass="alignTextRight">
+								<h:outputLabel value="#{msg.listas_gestion_detalle_unidad_propietaria}" for="comboUnidadPropietaria" />
+							</p:column>
+							<p:column>
+
+								<p:autoComplete id="comboUnidadPropietaria" value="#{listasGestionDetalleController.unidadPropietaria}"
+									itemLabel="#{valenciano? unidadPropietaria.nombreUnidadVal:unidadPropietaria.nombreUnidadCas  }" itemValue="#{unidadPropietaria}" queryDelay="200"
+									converter="uoBasicViewConverter" var="unidadPropietaria" size="50" dropdown="true" completeMethod="#{listasGestionDetalleController.completeUnidadPropietaria}"
+									scrollHeight="200" disabled="#{listasGestionDetalleController.listaExistente}">
+									<p:ajax event="query" global="false" />
+								</p:autoComplete>
+
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column styleClass="alignTextRight">
+								<h:outputLabel value="#{msg.listas_gestion_detalle_nombre_cas}" for="inputNombreCas" />
+							</p:column>
+							<p:column>
+								<p:inputText id="inputNombreCas" style="width:100%" value="#{listasGestionDetalleController.lista.nombreCas}" disabled="#{listasGestionDetalleController.listaExistente}" />
+							</p:column>
+						</p:row>
+
+
+						<p:row>
+							<p:column styleClass="alignTextRight">
+								<h:outputLabel value="#{msg.listas_gestion_detalle_nombre_val}" for="inputNombreVal" />
+							</p:column>
+							<p:column>
+								<p:inputText id="inputNombreVal" style="width:100%" value="#{listasGestionDetalleController.lista.nombreVal}" disabled="#{listasGestionDetalleController.listaExistente}" />
+							</p:column>
+						</p:row>
+
+
+						<p:row>
+							<p:column styleClass="alignTextRight alignTop">
+								<h:outputLabel value="#{msg.listas_gestion_detalle_descripcion}" for="inputDescripcion" />
+							</p:column>
+							<p:column>
+								<p:inputTextarea id="inputDescripcion" value="#{listasGestionDetalleController.lista.descripcion}" rows="3" cols="82" maxlength="255" style="width:100%" />
+							</p:column>
+						</p:row>
+
+
+						<p:row>
+
+							<p:column styleClass="alignTextRight">
+								<h:outputLabel value="#{msg.listas_gestion_detalle_fecha_creacion}" for="inputFechaCreacion" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="inputFechaCreacion" value="#{listasGestionDetalleController.lista.fechaCreacion}" readonly="true" style="width: 99px !important;" disabled="true">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+								</p:inputText>
+
+								<h:outputLabel style="margin-left:30px" value="#{msg.listas_gestion_detalle_ultima_actualizacion}" for="inputFechaModificacion" />
+
+								<p:inputText id="inputFechaModificacion" value="#{listasGestionDetalleController.lista.fechaModificacion}" readonly="true" style="width: 99px !important;margin-left:10px"
+									disabled="true">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+								</p:inputText>
+							</p:column>
+
+						</p:row>
+
+
+
+						<p:row>
+							<p:column colspan="2" style="padding: 20px 0px 0px 0px;">
+								<p:toolbar id="menuListaUnidades">
+
+									<p:toolbarGroup align="left">
+										<h:outputText value="#{msg.listas_gestion_detalle_unidades}" />
+									</p:toolbarGroup>
+
+									<p:toolbarGroup align="right">
+
+
+										<p:commandLink id="buttonAddUnidad" actionListener="#{listasGestionDetalleController.initDialogSeleccionUnidades()}" oncomplete="PF('dialogSeleccionUnidades').show();"
+											styleClass="fa-commandlink fa-plus-circle">
+
+											<h:outputText value="#{msg.listas_gestion_detalle_anadir_unidad}" />
+										</p:commandLink>
+
+										<p:commandLink id="buttonRemoveUnidad" action="#{listasGestionDetalleController.removeUnidadesDestino}" styleClass="fa-commandlink fa-trash"
+											update=":edicionListaForm:listUnidadesDestino">
+											<h:outputText value="#{msg.listas_gestion_detalle_eliminar_unidad}" />
+										</p:commandLink>
+
+									</p:toolbarGroup>
+
+								</p:toolbar>
+
+								<p:dataTable id="listUnidadesDestino" var="dataItem" value="#{listasGestionDetalleController.lista.unidades}" selectionMode="multiple" rowKey="#{dataItem.uid}"
+									scrollable="true" scrollHeight="200" selection="#{listasGestionDetalleController.unidadesRemove}" emptyMessage="#{msg.listas_gestion_detalle_datatable_empty}">
+
+
+									<p:column sortBy="#{dataItem.codigoOrganicoExterno}" headerText="#{msg.cod_organico_externo}" width="95">
+										<h:outputText value="#{dataItem.codigoOrganicoExterno}" />
+									</p:column>
+
+									<p:column sortBy="#{dataItem.nombreUnidadVal}" headerText="#{msg.nombre_unidad}" rendered="#{valenciano}">
+										<h:outputText value="#{dataItem.nombreUnidadVal}" />
+									</p:column>
+									<p:column sortBy="#{dataItem.nombreUnidadCas}" headerText="#{msg.nombre_unidad}" rendered="#{!valenciano}">
+										<h:outputText value="#{dataItem.nombreUnidadCas}" />
+									</p:column>
+
+								</p:dataTable>
+
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+
+				</p:panel>
+			</h:form>
+
+			<!--  DIALOGO DE SELECCION DE DESTINOS -->
+			<p:dialog global="true" closeOnEscape="true" widgetVar="dialogSeleccionUnidades" modal="true" resizable="false" height="415" width="800"
+				header="#{msg.listas_gestion_detalle_seleccion_unidades_title}">
+
+				<p:ajax event="close" onstart="PF('unidadResultTable').clearFilters();" />
+
+				<h:form id="formSeleccionUnidad">
+
+					<p:remoteCommand name="aceptarUnidadesSeleccionadas" global="false" actionListener="#{listasGestionDetalleController.buttonAddUnidadesDestino}"
+						oncomplete="PF('dialogSeleccionUnidades').hide()" update=":edicionListaForm:listUnidadesDestino" />
+
+					<p:dataTable id="unidadResultTable" widgetVar="unidadResultTable" var="unidadDestino" value="#{listasGestionDetalleController.unidadesDestino}" selectionMode="multiple"
+						sortMode="single" selection="#{listasGestionDetalleController.unidadesAdd}" rowKey="#{unidadDestino.uid}" scrollable="true" scrollHeight="350"
+						emptyMessage="#{msg.unidadorganizativa_datatable_empty}" filteredValue="#{listasGestionDetalleController.unidadesFiltered}">
+
+						<f:facet name="header">
+
+
+
+							<h:outputLabel value="#{msg.filtro}" for="globalFilter" />
+							<p:inputText id="globalFilter" styleClass="arquetipo-globalFilter" onkeyup="PF('unidadResultTable').filter()" style="margin: 0px 10px;" />
+							<i id="tableUnidadesProgressIndicator" class="ayfwk-fa-progreso" style="visibility: hidden;" />
+
+
+
+							<div style="display: block; float: right;">
+
+								<p:commandLink id="buttonAddUnidadDestino" global="false" onclick="aceptarUnidadesSeleccionadas();" disabled="#{listasGestionDetalleController.unidadesAddNoSelected}"
+									styleClass="fa-commandlink fa-check-circle">
+
+									<h:outputText value="#{msgfwk.linkAccept}" />
+								</p:commandLink>
+
+
+								<p:commandLink id="buttonUnidadDestinoSalir" oncomplete="PF('dialogSeleccionUnidades').hide()" update=":edicionListaForm:listUnidadesDestino"
+									styleClass="fa-commandlink fa-times-circle" process="@this">
+
+									<h:outputText value="#{msg.salir}" />
+
+								</p:commandLink>
+
+							</div>
+
+						</f:facet>
+
+						<p:ajax event="rowDblselect" oncomplete="aceptarUnidadesSeleccionadas();" />
+
+						<p:ajax event="rowSelect" global="false" update=":formSeleccionUnidad:unidadResultTable:buttonAddUnidadDestino" process="@this"
+							onstart="visible('tableUnidadesProgressIndicator')" oncomplete="invisible('tableUnidadesProgressIndicator')" />
+
+						<p:ajax event="filter" global="false" onstart="visible('tableUnidadesProgressIndicator')" oncomplete="invisible('tableUnidadesProgressIndicator')" />
+
+						<p:column sortBy="#{unidadDestino.codigoOrganicoExterno}" headerText="#{msg.cod_organico_externo}" width="95" filterBy="#{unidadDestino.codigoOrganicoExterno}"
+							filterStyleClass="hideFilter" filterMatchMode="contains">
+							<h:outputText value="#{unidadDestino.codigoOrganicoExterno}" />
+						</p:column>
+
+						<p:column sortBy="#{unidadDestino.nombreUnidadVal}" headerText="#{msg.nombre_unidad}" filterBy="#{unidadDestino.nombreUnidadVal}" filterStyleClass="hideFilter"
+							filterMatchMode="contains" rendered="#{valenciano}">
+							<h:outputText value="#{unidadDestino.nombreUnidadVal}" />
+						</p:column>
+
+						<p:column sortBy="#{unidadDestino.nombreUnidadCas}" headerText="#{msg.nombre_unidad}" filterBy="#{unidadDestino.nombreUnidadCas}" filterStyleClass="hideFilter"
+							filterMatchMode="contains" rendered="#{!valenciano}">
+							<h:outputText value="#{unidadDestino.nombreUnidadCas}" />
+						</p:column>
+
+					</p:dataTable>
+
+				</h:form>
+			</p:dialog>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

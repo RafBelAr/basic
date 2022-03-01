@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:ayfwk="http://www.valencia.es/ayWebFwk/ELFunctions" xmlns:c="http://java.sun.com/jstl/core">
+<f:view contentType="text/html" />
+
+<f:metadata>
+	<f:viewAction action="#{listasGestionController.checkSecurity}" />
+</f:metadata>
+
+
+<h:body>
+
+	<ui:composition template="/view/layout/main_layout.xhtml">
+
+		<ui:param name="showFooterMainParam" value="false" />
+
+		<ui:param name="valenciano" value="#{!applicationController.valenciaFlag}" />
+
+		<ui:define name="content">
+
+			<h:form id="listaGestionForm">
+
+				<p:remoteCommand name="filtrarListas" action="#{listasGestionController.filtrarListas}" update="tableListas" process="@form" />
+
+				<p:panel id="listaGestionPanel" styleClass="crudModalWrapper">
+
+					<f:facet name="header">
+						<div align="left" style="display: block; float: left;">
+							<h:outputText value="#{msg.listas_gestion_titulo}" />
+						</div>
+						<div align="right" style="display: block; float: right;">
+							<p:commandLink id="buttonSalir" ajax="false" action="/view/default.xhtml?faces-redirect=true" styleClass="fa-commandlink fa-times-circle" value="#{msg.salir}" />
+						</div>
+					</f:facet>
+
+					<h:panelGroup id="criteriosPanel">
+						<div id="listaGestionCriteriaList" class="criteriaBody" style="height: 35px;">
+
+							<div class="criteriaBodyLabel" style="margin-left: 10px;">
+								<h:outputLabel value="#{msg.listadestino_nombre}" for="filter_lista_destino_nombre" />
+							</div>
+							<div class="criteriaBodyInput" style="margin-left: 2px;">
+								<h:inputText id="filter_lista_destino_nombre" value="#{listasGestionController.filtroNombreLista}" style="width: 325px;">
+									<f:ajax event="blur" render="tableListas" />
+								</h:inputText>
+							</div>
+
+							<div class="criteriaBodyButton" style="margin-left: 10px;">
+								<p:commandButton id="listaSearchtButton" value="#{msgfwk.linkSearch}" icon="fa-button fa-search" action="#{listasGestionController.filtrarListas}" update="tableListas"
+									process="@form" />
+							</div>
+
+							<div class="criteriaBodyButton" style="margin-left: 2px;">
+								<p:commandButton id="listaResetButton" value="#{msgfwk.resetButton}" action="#{listasGestionController.resetSearch}" icon="fa-button fa-refresh"
+									update="criteriosPanel tableListas" process=" @this" />
+							</div>
+						</div>
+
+					</h:panelGroup>
+
+					<p:dataTable id="tableListas" value="#{listasGestionController.listasGestionadas}" var="dataItem" rowKey="#{dataItem.rowKey}" rows="25" rowsPerPageTemplate="25"
+						scrollHeight="100%" paginator="true" paginatorPosition="bottom" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						currentPageReportTemplate="#{msgfwk.page_label}" selectionMode="single" selection="#{listasGestionController.listaSeleccionada}"
+						emptyMessage="#{msg.listadestino_datatable_empty}" dblClickSelect="true" rowSelectListener="#{listasGestionController.listaSeleccionadaListener}">
+
+						<f:facet name="header">
+
+
+							<h:outputText value="#{msg.listas_gestion_listas_destino}" />
+							<i id="tableProgressIndicator" class="ayfwk-fa-progreso" style="visibility: hidden;" />
+
+
+							<div style="display: block; float: right;">
+
+								<h:panelGroup id="botoneraTablaListas">
+
+									<p:commandLink id="buttonAnadir" action="#{listasGestionController.buttonAnadirLista}" styleClass="fa-commandlink fa-plus-circle" value="#{msg.anadir}">
+										<p:ajax event="dialogReturn" update="tableListas" />
+									</p:commandLink>
+
+									<p:commandLink id="buttonEditar" action="#{listasGestionController.buttonEditarLista}" global="false" styleClass="fa-commandlink fa-pencil-alt"
+										disabled="#{listasGestionController.buttonEditarListaDisabled}" value="#{msg.editar}">
+										<p:ajax event="dialogReturn" update="tableListas" />
+									</p:commandLink>
+
+									<p:commandLink id="buttonBorrar" action="#{listasGestionController.buttonBorrarLista}" styleClass="fa-commandlink fa-trash"
+										disabled="#{listasGestionController.buttonEditarListaDisabled}" update="tableListas" value="#{msg.borrar}" />
+
+								</h:panelGroup>
+
+							</div>
+
+						</f:facet>
+
+						<p:ajax event="rowSelect" update=":listaGestionForm:tableListas:botoneraTablaListas" global="false" onstart="visible('tableProgressIndicator')"
+							oncomplete="invisible('tableProgressIndicator')" />
+
+						<p:ajax event="rowUnselect" update=":listaGestionForm:tableListas:botoneraTablaListas" global="false" onstart="visible('tableProgressIndicator')"
+							oncomplete="invisible('tableProgressIndicator')" />
+
+						<p:ajax event="rowDblselect" oncomplete="clickButtonId('#{p:component('buttonEditar')}')" global="false" />
+
+						<p:column headerText="#{msg.listadestino_nombre}" style=" width:40%;" sortBy="#{dataItem.nombreVal}" rendered="#{valenciano}">
+							<h:outputText value="#{dataItem.nombreVal}" />
+						</p:column>
+
+						<p:column headerText="#{msg.listadestino_nombre}" style=" width:40%;" sortBy="#{dataItem.nombreCas}" rendered="#{!valenciano}">
+							<h:outputText value="#{dataItem.nombreCas}" />
+						</p:column>
+
+						<p:column headerText="#{msg.listadestino_unidad}" style=" width:60%;" sortBy="#{dataItem.unidadPropietaria.nombreUnidadVal}" rendered="#{valenciano}">
+							<h:outputText value="#{dataItem.unidadPropietaria.nombreUnidadVal}" />
+						</p:column>
+						<p:column headerText="#{msg.listadestino_unidad}" style=" width:60%;" sortBy="#{dataItem.unidadPropietaria.nombreUnidadCas}" rendered="#{!valenciano}">
+							<h:outputText value="#{dataItem.unidadPropietaria.nombreUnidadCas}" />
+						</p:column>
+
+
+					</p:dataTable>
+
+				</p:panel>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

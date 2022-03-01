@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>basic</artifactId>
+		<groupId>es.valencia</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+
+	<artifactId>basic-frontend-web</artifactId>
+	<packaging>war</packaging>
+
+	<name>basic-frontend-web</name>
+
+	<organization>
+		<name>Ajuntament de Valencia</name>
+		<url>http://www.valencia.es</url>
+	</organization>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
+
+
+	<build>
+		<finalName>${project.parent.artifactId}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+
+					<webResources>
+
+						<resource>
+							<directory>src/main/webapp/WEB-INF</directory>
+							<filtering>true</filtering>
+							<targetPath>WEB-INF</targetPath>
+							<includes>
+								<include>**/*.xml</include>
+								<include>**/users.properties</include>
+							</includes>
+						</resource>
+
+						<resource>
+							<directory>src/main/webapp/</directory>
+							<filtering>true</filtering>
+							<includes>
+								<include>**/testApp.html</include>
+							</includes>
+						</resource>
+
+					</webResources>
+
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+		</profile>
+
+		<profile>
+			<id>test</id>
+		</profile>
+
+		<profile>
+			<id>int</id>
+		</profile>
+
+		<profile>
+			<id>pro</id>
+			<properties>
+				<hide.service.list.page>true</hide.service.list.page>
+			</properties>
+		</profile>
+	</profiles>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>es.valencia</groupId>
+			<artifactId>basic-resources</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>es.valencia</groupId>
+			<artifactId>basic-backend</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>es.valencia</groupId>
+			<artifactId>basic-basic-ws</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>es.valencia</groupId>
+			<artifactId>basic-proxies-enterprise</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>es.valencia</groupId>
+			<artifactId>basic-proxies-internal</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<!-- Framework Primefaces 4.0 -->
+		<dependency>
+			<groupId>es.valencia</groupId>
+			<artifactId>aywebfwk-view-pf</artifactId>
+			<version>${aywebfwk.version}</version>
+		</dependency>
+
+		<!-- JMinix -->
+		<dependency>
+			<groupId>org.jminix</groupId>
+			<artifactId>jminix</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>biz.paluch.logging</groupId>
+			<artifactId>logstash-gelf</artifactId>
+			<version>1.13.0</version>
+		</dependency>
+
+	</dependencies>
+
+
+
+</project>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+	    http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+	     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+	     http://www.springframework.org/schema/context  
+	     http://www.springframework.org/schema/context/spring-context-4.3.xsd
+	     http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+	     http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+	     http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+	     http://www.springframework.org/schema/util
+	     http://www.springframework.org/schema/util/spring-util.xsd
+	     "
+	default-autowire="byName">
+
+	<!-- Carga contexto aywebfwk core -->
+	<import resource="classpath:META-INF/ayWebFwk-core.xml" />
+
+	<!-- Carga del contexto de seguridad ayWebFwk-security -->
+	<import resource="classpath:META-INF/ayWebFwk-security.xml" />
+	<import resource="classpath:META-INF/ayWebFwk-security-acl.xml" />
+	<import resource="classpath:META-INF/ayWebFwk-security-app.xml" />
+
+	<!-- Carga del contexto de los servicios web del framework -->
+	<import resource="classpath:META-INF/ayWebFwk-ws.xml" />
+
+	<!-- Establece los permisos creados exclusivamente para esta aplicación -->
+	<bean id="aywebfwkPermissionFactory" class="org.springframework.security.acls.domain.DefaultPermissionFactory">
+		<constructor-arg type="java.lang.Class" value="es.valencia.security.AppPermission"></constructor-arg>
+	</bean>
+
+	<!-- Ficheros de propiedades -->
+	<context:property-placeholder
+		location="classpath:aywebfwk-config.properties, classpath:aywebfwk-security.properties, classpath:aywebfwk-passwords.properties, classpath:aywebfwk-app.properties, classpath:aywebfwk-proxies.properties, classpath:aywebfwk-ws.properties, classpath:aywebfwk-db.properties"
+		ignore-unresolvable="false" order="0" file-encoding="UTF-8" />
+
+	<context:component-scan base-package="es.valencia" annotation-config="true" />
+
+	<bean id="messageSource" name="resourceBundle" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="fileEncodings" value="UTF-8" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="basenames">
+			<list>
+				<value>classpath:messages/messages</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+
+		<property name="scopes">
+
+			<map>
+				<entry key="view">
+					<bean class="es.valencia.aytowebfwk.core.ViewScope" />
+				</entry>
+			</map>
+
+		</property>
+
+	</bean>
+
+	<!-- Configuración motor de persistencia y cache (Hibernate) -->
+	<import resource="classpath:META-INF/appContextBasico-persistence.xml" />
+
+	<!-- Configuración JMinix, permite consultar estadísticas via JMX -->
+	<import resource="appContext-jmx.xml" />
+
+	<!-- Import configuración Servicios Web -->
+	<import resource="classpath:META-INF/context-ws.xml" />
+
+	<!-- Import configuración proxies -->
+	<import resource="appContextProxies.xml" />
+
+
+	<!-- Configuración dozer mapper -->
+	<import resource="appContext-dozer.xml" />
+
+</beans>

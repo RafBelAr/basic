@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="arquetipo-webapp">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="arquetipo-webapp-resources-5.1.7-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/arquetipo-webapp-resources/arquetipo-webapp-resources">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquetipo-webapp-backend-5.1.7-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/arquetipo-webapp-backend/arquetipo-webapp-backend">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquetipo-webapp-basic-ws-5.1.7-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/arquetipo-webapp-basic-ws/arquetipo-webapp-basic-ws">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquetipo-webapp-common-schematypes-5.1.7-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/arquetipo-webapp-common-schematypes/arquetipo-webapp-common-schematypes">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquetipo-webapp-proxies-enterprise-5.1.7-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/arquetipo-webapp-proxies-enterprise/arquetipo-webapp-proxies-enterprise">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquetipo-webapp-proxies-internal-5.1.7-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/arquetipo-webapp-proxies-internal/arquetipo-webapp-proxies-internal">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="java-output-path" value="/arquetipo-webapp-frontend-web/target/classes"/>
+        <property name="context-root" value="arquetipo-webapp"/>
+    </wb-module>
+</project-modules>

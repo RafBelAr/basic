@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/basic-backend/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basic-backend/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basic-basic-ws/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basic-basic-ws/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basic-common-schematypes/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basic-common-schematypes/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basic-frontend-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basic-frontend-web/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basic-proxies-enterprise/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basic-proxies-enterprise/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basic-proxies-internal/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basic-proxies-internal/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basic-resources/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basic-resources/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basic-resources/src/main/resources-dev" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

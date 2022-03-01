@@ -1,0 +1,199 @@
+@CHARSET "UTF-8";
+/* Estilos específicos de la aplicación */
+button.ui-button-icon-only {
+    width: 2em;
+    heigth: 2em
+}
+
+.percent100 .ui-autocomplete-multiple-container {
+    width: 100%;
+    box-sizing: border-box;
+}
+/* datatable con los bordes redondeados*/
+.ui-datatable.ui-corner-all table {
+    border-collapse: separate;
+    *border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.ui-datatable.ui-corner-all table tr:first-child th:first-child {
+    -moz-border-radius: 4px 0 0 0;
+    -webkit-border-radius: 4px 0 0 0;
+    border-radius: 4px 0 0 0;
+}
+
+.ui-datatable.ui-corner-all table tr:first-child th:last-child {
+    -moz-border-radius: 0 4px 0 0;
+    -webkit-border-radius: 0 4px 0 0;
+    border-radius: 0 4px 0 0;
+}
+
+.ui-datatable.ui-corner-all table tr:first-child th:only-child {
+    -moz-border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+}
+
+.ui-datatable.ui-corner-all table tbody td {
+    border-top: 0;
+    border-top: inherit;
+}
+
+.ui-datatable.ui-corner-all table tr:last-child td:first-child {
+    -moz-border-radius: 0 0 0 4px;
+    -webkit-border-radius: 0 0 0 4px;
+    border-radius: 0 0 0 4px;
+}
+
+.ui-datatable.ui-corner-all table tr:last-child td:last-child {
+    -moz-border-radius: 0 0 4px 0;
+    -webkit-border-radius: 0 0 4px 0;
+    border-radius: 0 0 4px 0;
+}
+
+.ui-datatable.ui-corner-all table tr:last-child td:only-child {
+    -moz-border-radius: 0 0 4px 4px;
+    -webkit-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
+}
+
+.panelDataTable .ui-panel-content {
+    padding: 3px 3px 3px 3px;
+}
+
+.tableNoBorder>tbody>tr>td {
+    border-style: none !important;
+    padding: 0 0 0 0;
+}
+
+.listNoBorder>table>tbody>tr>td {
+    border-style: none !important;
+    padding: 0 0 0 0;
+}
+
+.nota-usuario {
+    font-size: 11px;
+    padding: 5px;
+}
+
+.uoconf-unidad-nombre {
+    display: block;
+}
+
+.uoconf-responsable {
+    font-size: 11px;
+    display: block;
+}
+
+.uoconf-cargo {
+    font-size: 11px;
+    color: #888888;
+}
+
+.uoconf-sustitutoDescripcion {
+    font-weight: bold;
+}
+
+.uoconf-sustitutoCargo {
+    display: block;
+    padding-left: 20px;
+}
+
+.uoconf-table-personal .ui-datatable-header {
+    display: flex;
+}
+
+.uoconf-table-personal-filtro {
+    width: 100%;
+}
+
+.uoconf-table-personal-filtro input {
+    display: inline-block;
+}
+
+.uoconf-table-personal-filtro i {
+    float: none !important;
+    height: 12px;
+}
+
+.uoconf-table-personal-filtro .uoconf-table-personal-progress {
+    display: inline-block;
+}
+
+.uoconf-table-personal-acciones {
+    line-height: 22px;
+    float: right;
+}
+
+.autocomplete-usuario {
+    width: 100%;
+}
+
+.autocomplete-usuario .ui-autocomplete-input {
+    width: 95%;
+}
+
+.autocomplete-usuario-panel .ui-autocomplete-item {
+    border-color: rgb(255, 255, 255) !important;
+}
+
+.autocomplete-usuario-panel tr.ui-state-highlight {
+    text-shadow: 1px 1px 1px #929292;
+}
+
+.autocomplete-usuario-panel tr.ui-state-highlight td.autocomplete-usuario-item-cod {
+    font-size: 1.1em;
+}
+
+.autocomplete-usuario-item-cod {
+    background-color: rgb(56, 112, 126) !important;
+    width: 50px;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.autocomplete-usuario-item-descripcion {
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #E6E6E6;
+}
+
+.panel-conf-unidad {
+    margin-top: 5px;
+}
+
+.panel-conf-unidad {
+    margin-top: 5px;
+}
+
+.panel-conf-unidad .ui-panel-title {
+    display: block;
+}
+
+.ui-confirm-dialog .ui-dialog-content {
+    display: table;
+}
+
+.ui-confirm-dialog .ui-confirm-dialog-severity {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.ui-confirm-dialog .ui-confirm-dialog-message {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.ui-confirm-dialog .ui-dialog-buttonpane {
+    text-align: right;
+}
+
+.datatable-header-buttons-filter {
+    width: 100%;
+    text-align: right;
+    height: 22px;
+    line-height: 22px;
+}

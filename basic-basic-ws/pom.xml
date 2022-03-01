@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>es.valencia</groupId>
+		<artifactId>basic</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+
+	<artifactId>basic-basic-ws</artifactId>
+
+	<name>basic-basic-ws</name>
+
+
+	<packaging>jar</packaging>
+
+	<organization>
+		<name>Ajuntament de Valencia</name>
+		<url>http://www.valencia.es</url>
+	</organization>
+
+
+	<properties>
+	    <maven.deploy.skip>true</maven.deploy.skip>
+		<url.wsdl.servicio.comunicaciones>src/main/resources/comunicaciones-wsdl.xml</url.wsdl.servicio.comunicaciones>
+		<url.wsdl.servicio.unidades>http://prebus.valencia.es:7011/sbresource?WSDL/NotasInterioresElectronicas-pruebas/Servicios/Comunicaciones/Proveedores/UnidadesOrganizativas_v2.0_concreto</url.wsdl.servicio.unidades>
+	</properties>
+
+	<build>
+
+		<finalName>${project.artifactId}</finalName>
+
+		<!-- Plugin de CXF para generar las clases Java a partir de los WSDL. Las clases generadas se depositarán en la carpeta "target/generated-sources/cxf" y es necesario copiarla manualmente a 
+			"src/main/java". Si dentro de la misma aplicación se generan varios proxies y/o servicios es probable que existan clases duplicadas entre los módulos proxies-enterprise, proxies-internal y basic-ws. 
+			Estas clases/paquetes duplicados deben moverse al módulo common-schematypes. Como ayuda en la detección de clases/paquetes duplicados, se ha incluido en el módulo principal el plugin de maven 
+			"duplicate-finder-maven-plugin", que se encarga de detectar (fase package de maven), si existen clases duplicadas, y en caso de encontrarlas interrumpe el proceso de build mostrando por consola 
+			las clases duplicadas. -->
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<doclint>none</doclint>
+				</configuration>
+			</plugin>
+
+			<!--<plugin> <groupId>org.apache.cxf</groupId> <artifactId>cxf-codegen-plugin</artifactId> <executions> <execution> <id>generate-sources</id> <phase>generate-sources</phase> 
+				<configuration> <sourceRoot>${project.build.directory}/generated/cxf</sourceRoot> <wsdlOptions> <wsdlOption> <wsdl>${url.wsdl.servicio.comunicaciones}</wsdl> <extraargs> <extraarg>-impl</extraarg> 
+				<extraarg>-exsh</extraarg> <extraarg>false</extraarg> <extraarg>-verbose</extraarg> <extraarg>-nexclude</extraarg> <extraarg>http://www.valencia.es/schema/SerTICEntidadbase</extraarg> <extraarg>-nexclude</extraarg> 
+				<extraarg>http://www.valencia.es/schema/SerTICFaultMessage</extraarg> <extraarg>-nexclude</extraarg> <estraarg>http://www.valencia.es/schema/Authorization</estraarg> <extraarg>-nexclude</extraarg> 
+				<estraarg>http://www.valencia.es/schema/tiposbase</estraarg> </extraargs> </wsdlOption> <wsdlOption> <wsdl>${url.wsdl.servicio.unidades}</wsdl> <extraargs> <extraarg>-impl</extraarg> <extraarg>-exsh</extraarg> 
+				<extraarg>false</extraarg> <extraarg>-verbose</extraarg> <extraarg>-nexclude</extraarg> <extraarg>http://www.valencia.es/schema/SerTICEntidadbase</extraarg> <extraarg>-nexclude</extraarg> <extraarg>http://www.valencia.es/schema/SerTICFaultMessage</extraarg> 
+				<extraarg>-nexclude</extraarg> <estraarg>http://www.valencia.es/schema/Authorization</estraarg> <extraarg>-nexclude</extraarg> <estraarg>http://www.valencia.es/schema/tiposbase</estraarg> </extraargs> 
+				</wsdlOption> </wsdlOptions> </configuration> <goals> <goal>wsdl2java</goal> </goals> </execution> </executions> </plugin> -->
+		</plugins>
+	</build>
+
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>es.valencia</groupId>
+			<artifactId>basic-common-schematypes</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>es.valencia</groupId>
+			<artifactId>basic-resources</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>es.valencia</groupId>
+			<artifactId>basic-backend</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+
+	</dependencies>
+
+</project>

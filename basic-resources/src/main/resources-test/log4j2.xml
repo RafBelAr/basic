@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration status="warn">
+
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{dd/MM/yyyy HH:mm:ss} %p %c : %3L - %m%n" />
+		</Console>
+
+		<RollingFile name="rollingFilelog" fileName="/var/log/apps/${project.parent.artifactId}_${map:hostName}.log" filePattern="/var/log/apps/${project.parent.artifactId}-%i.log">
+			<PatternLayout pattern="%d{dd/MM/yyyy HH:mm:ss} %5p %c{3}: %M:%L - %m%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="19500KB" />
+			</Policies>
+			<DefaultRolloverStrategy max="10" />
+		</RollingFile>
+
+	</Appenders>
+
+
+	<Loggers>
+
+		<Logger name="es.valencia" level="DEBUG" />
+		<Logger name="es.valencia.aytowebfwk.security" level="FATAL" />
+
+
+		<Logger name="org.hibernate" level="ERROR" />
+		<Logger name="org.springframework" level="ERROR" />
+		<Logger name=" org.primefaces" level="ERROR" />
+		<Logger name="org.dozer" level="ERROR" />
+
+		<Logger name="jdbc.sqlonly" level="ERROR" />
+		<Logger name="jdbc.sqltiming" level="DEBUG" />
+		<Logger name="jdbc.audit" level="OFF" />
+		<Logger name="jdbc.resultset" level="ERROR" />
+		<Logger name="jdbc.connection" level="ERROR" />
+		<Logger name="jdbc.resultsettable" level="OFF" />
+
+		<Root level="info" additivity="false">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="rollingFilelog" />
+		</Root>
+
+	</Loggers>
+
+</Configuration>

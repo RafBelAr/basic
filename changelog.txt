@@ -1,0 +1,61 @@
+# Versión 5.1.7 26/07/2020 COVID
+-----------------------------------------------------------------------------------------
+- Correción error que no permitia crear nuevas entradas de menú desde el mantenimiento.
+- Mejora en la configuración de log4j.
+- Modificado Usuario de bus
+- Modificadas entidades securizadas
+
+# Versión 5.1.5 29/04/2020 COVID
+-----------------------------------------------------------------------------------------
+- Modificados parámetros de conexión
+- Corrección varios xml que daban error en las validaciones de Eclipse
+
+# Versión 5.1.4 07/04/2020 COVID
+-----------------------------------------------------------------------------------------
+- Actualizado a la versión 5.1.4 del framework.
+- Añadidos campos personalizados graylog para aportar más información de contexto, como usuario de sesión, identificador de mensaje CXF.
+
+
+# Versión 5.1.1 05/12/2019
+-----------------------------------------------------------------------------------------
+- Actualizado a la versión 5.1.1 del framework.
+- Corregido error al acceder desde la intranet.
+- Corregidos mensajes de error al hacer login.
+- Corregido error al usar el fichero aywebfwk-users.properties
+- Vuelve a estar disponible el mantenimiento del menú de la aplicación.
+- Ficheros de log modificados para que se tenga en cuenta información del Threadcontext. Ahora en cada linea de log se imprime el usuario del contexto de seguridad.
+
+
+# Versión 5.1.0 01/11/2019
+-----------------------------------------------------------------------------------------
+-Actualizado a la vesión 5.1.0 del framework
+- Java 7.0 -> Java 8.0 Amazon Corretto
+- Spring 4.0.3 ->  5.1.8.RELEASE
+- Spring Security 3.2.7 -> 5.1.8.RELEASE
+- Hibernate 4.3.2.Final -> 5.2.18.Final
+- Primefaces 5.1 -> 7.0
+- CXF 3.7.18 -> 3.0.15
+- Log4j 1.2 -> 2.9.1
+ 
+# Versión 5.0.0 25/06/2019
+-----------------------------------------------------------------------------------------
+-Actualizado a la versión 5 del framework
+
+# Versión 4.5.0 15/12/2017
+-----------------------------------------------------------------------------------------
+- Arquetipo adaptado a la versión 4.5.0-RELEASE de AyWebFwk
+
+
+# Versión 1.0.2 07/12/2016
+-----------------------------------------------------------------------------------------
+- Cambiada configuración de los pools de conexiones para entornos de test y desa. 
+- Corregido error en el menú de la aplicación que provocaba un consumo del 100% de la CPU.
+- Corregido error: El menú no aparece traducido cuando se cambia de idioma.
+
+# Versión 1.0.1 07/12/2016
+-----------------------------------------------------------------------------------------
+- Añadidos scripts de creación de esquema de base de datos.
+
+# Versión 1.0.0
+-----------------------------------------------------------------------------------------
+Versión inicial.

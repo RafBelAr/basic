@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+
+
+
+
+
+	<mapping>
+
+		<class-a>es.valencia.jsf.model.ResponsableView</class-a>
+		<class-b>es.valencia.entity.Responsable</class-b>
+
+	</mapping>
+
+	<mapping>
+		<class-a>es.valencia.entity.UnidadOrganizativaBDO</class-a>
+		<class-b>es.valencia.jsf.model.UOConfiguracionView</class-b>
+
+		<field>
+			<a>uid</a>
+			<b>uid</b>
+		</field>
+
+		<field>
+			<a>codigoOrganicoExterno</a>
+			<b>codigoOrganicoExterno</b>
+		</field>
+
+		<field>
+			<a>nombreUnidadCas</a>
+			<b>nombreUnidadCas</b>
+		</field>
+
+		<field>
+			<a>nombreUnidadVal</a>
+			<b>nombreUnidadVal</b>
+		</field>
+	</mapping>
+
+	<mapping>
+		<class-a>es.valencia.entity.UnidadOrganizativaBDO</class-a>
+		<class-b>es.valencia.jsf.model.UOBasicView</class-b>
+
+		<field>
+			<a>uid</a>
+			<b>uid</b>
+		</field>
+
+		<field>
+			<a>codigoOrganicoExterno</a>
+			<b>codigoOrganicoExterno</b>
+		</field>
+
+		<field>
+			<a>nombreUnidadCas</a>
+			<b>nombreUnidadCas</b>
+		</field>
+
+		<field>
+			<a>nombreUnidadVal</a>
+			<b>nombreUnidadVal</b>
+		</field>
+	</mapping>
+
+
+
+	<mapping>
+		<class-a>es.valencia.entity.UnidadOrganizativaBDO</class-a>
+		<class-b>es.valencia.jsf.model.UOConfiguracionViewDetalle
+		</class-b>
+
+		<field>
+			<a>responsable</a>
+			<b>responsable</b>
+		</field>
+
+		<field>
+			<a>sustitutosUnmodifiable</a>
+			<b>sustitutos</b>
+			<a-hint>es.valencia.entity.Responsable</a-hint>
+			<b-hint>es.valencia.jsf.model.ResponsableView</b-hint>
+		</field>
+
+	</mapping>
+
+
+	<mapping type="one-way">
+
+		<class-a>es.valencia.entity.ListaDestino</class-a>
+		<class-b>es.valencia.jsf.model.ListaDetalleView</class-b>
+
+		<field>
+			<a>descripcion</a>
+			<b>descripcion</b>
+		</field>
+
+		<field>
+			<a get-method="getListaUnidadesDestinoUnmodifiable">listaUnidadesDestino</a>
+			<b>unidades</b>
+		</field>
+
+	</mapping>
+
+
+	<mapping type="one-way">
+
+		<class-a>es.valencia.proxies.internal.dto.SustitutoDto</class-a>
+		<class-b>es.valencia.jsf.model.UsuarioView</class-b>
+
+		<field>
+			<a get-method="getNombreCompleto()">nombreCompleto</a>
+			<b>nombreCompleto</b>
+		</field>
+
+	</mapping>
+
+	<mapping type="one-way">
+
+		<class-a>es.valencia.proxies.internal.dto.UsuarioSoaDto</class-a>
+		<class-b>es.valencia.jsf.model.UsuarioView</class-b>
+
+		<field>
+			<a get-method="getNombreApellidos()">nombreApellidos</a>
+			<b>nombreCompleto</b>
+		</field>
+
+	</mapping>
+
+	<mapping type="one-way">
+
+		<class-a>es.valencia.proxies.internal.dto.SustitutoDto</class-a>
+		<class-b>es.valencia.jsf.model.ResponsableView</class-b>
+
+	</mapping>
+
+	<mapping type="one-way">
+
+		<class-a>es.valencia.proxies.internal.dto.UsuarioSoaDto</class-a>
+		<class-b>es.valencia.jsf.model.RedactorView</class-b>
+
+	</mapping>
+
+
+	<mapping>
+		<class-a>es.valencia.schema.niedomain.unidadorganizativa.UnidadOrganizativaTypeV20
+		</class-a>
+		<class-b>es.valencia.proxies.internal.dto.UnidadSoaDto</class-b>
+
+		<field>
+			<a>uid</a>
+			<b>uid</b>
+		</field>
+
+		<field>
+			<a>gestores.gestor</a>
+			<b>gestores</b>
+		</field>
+
+		<field>
+			<a>redactores.redactor</a>
+			<b>redactores</b>
+		</field>
+
+		<field>
+			<a>candidatosAGestor.redactor</a>
+			<b>candidatosAGestor</b>
+		</field>
+
+		<field>
+			<a>responsable.usuario</a>
+			<b>responsableUsuario</b>
+		</field>
+
+		<field>
+			<a>sustitutos.sustituto</a>
+			<b>sustitutos</b>
+		</field>
+
+	</mapping>
+
+
+</mappings> 

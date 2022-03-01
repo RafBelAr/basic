@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:ayfwk="http://www.valencia.es/ayWebFwk/ELFunctions">
+<f:view contentType="text/html" />
+
+<f:metadata>
+	<f:viewParam id="matricula" name="matricula" value="#{cocheDetalleController.matricula}" />
+	<f:viewAction action="#{cocheDetalleController.init}" />
+</f:metadata>
+
+
+<h:body>
+
+	<ui:composition template="/view/layout/dialog_layout.xhtml">
+
+		<ui:param name="dialogTitulo" value="" />
+
+		<ui:param name="valenciano" value="#{!applicationController.valenciaFlag}" />
+
+		<ui:define name="content">
+
+			<p:growl id="messages" showDetail="true" showSummary="false" autoUpdate="true" closable="true" sticky="true" />
+
+			<h:form id="edicionListaForm">
+
+				<p:panel id="panelDatosBDO" style="    height: 275px;">
+
+					<f:facet name="header">
+
+						<div align="left" style="display: block; float: left;">
+							<h:outputText value="#{msg.coches_detalle_titulo}" />
+						</div>
+
+						<div align="right" style="display: block; float: right;">
+
+							<p:commandLink id="buttonGuardar" action="#{cocheDetalleController.buttonGuardar}" update="@form" process="@form"
+								styleClass="fa-commandlink fa-floppy-o">
+								<h:outputText value="#{msg.guardar}" />
+							</p:commandLink>
+
+							<p:commandLink id="buttonSalir" action="#{cocheDetalleController.buttonSalir}" process="@this"
+								styleClass="fa-commandlink fa-times-circle-o">
+								<h:outputText value="#{msg.salir}" />
+							</p:commandLink>
+
+						</div>
+
+					</f:facet>
+
+					<p:remoteCommand update="panelColorCoche" name="updateColorCoche" />
+
+					<div>
+						<h:panelGroup id="panelColorCoche" layout="block"
+							style="display:inline-block; font-size: 120px; padding: 10px; vertical-align: top; margin: 0px 100px;">
+
+							<i class="fa fa-car" style="color: ##{cocheDetalleController.coche.color}" />
+						</h:panelGroup>
+
+
+
+						<p:panelGrid columns="2" columnClasses="alignTextRight,alignTextLeft" styleClass="ui-noborder"
+							style="display:inline-block;    margin-top: 15px;">
+
+
+
+							<h:outputText value="#{msg.coches_matricula}" for="input_matricula" />
+							<h:panelGroup>
+								<p:inputText id="input_matricula" widgetVar="matricula" alt="Matricula" maxlength="10"
+									value="#{cocheDetalleController.coche.matricula}" required="true" requiredMessage="#{msg.coches_error_matricula_obligatoria}" />
+							</h:panelGroup>
+
+							<h:outputText value="#{msg.coches_modelo}" for="input_modelo" />
+							<p:inputText id="input_modelo" maxlength="100" value="#{cocheDetalleController.coche.modelo}" />
+
+							<h:outputText value="#{msg.coches_color}" for="input_color" />
+							<p:colorPicker id="input_color" widgetVar="colorCoche" value="#{cocheDetalleController.coche.color}" />
+
+							<h:outputText value="#{msg.coches_reserva}" for="input_reserva" />
+							<p:inputText id="input_reserva" maxlength="250" value="#{cocheDetalleController.coche.usuarioReserva}"
+								disabled="true" />
+
+
+
+						</p:panelGrid>
+
+					</div>
+
+
+				</p:panel>
+
+				<script type="text/javascript">
+					document.body.onload = function() {
+						$(".ui-colorpicker-container").each(function() {
+							$(this).data('colorpicker').onHide = function() {
+								updateColorCoche();
+							}
+						})
+					};
+				</script>
+			</h:form>
+
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

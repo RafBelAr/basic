@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context" xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+	xmlns:cxf="http://cxf.apache.org/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+	    http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+	     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+	     http://www.springframework.org/schema/context  
+	     http://www.springframework.org/schema/context/spring-context-4.3.xsd
+	     http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+	     http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+	     http://cxf.apache.org/transports/http/configuration
+         http://cxf.apache.org/schemas/configuration/http-conf.xsd"
+	default-autowire="byName">
+
+	<!-- Fichero de configuración Spring donde se declaran los proxies que se van utilizar Es obligatorio que los proxies declarados por la aplicación utilicen el bus "aywebfwk-cxf-default-bus". 
+		El bus aywebfwk-cxf-default-bus por defecto tiene activos los siguientes interceptores (en el caso de proxies): ENTRADA - ayWebFwkLogInInterceptor: Encargado hacer log de los mensajes de entrada. 
+		SALIDA - ayWebFwkLogOutInterceptor: Encargado de hacer log de los mensajes de salida. - ayWebFwkWss4jOutUserName: Crea la cabecera WS-Security (utiliza parámetros definidos en aywebfwk-proxies.properties). 
+		- ayWebFwkAppCredentialsOutInterceptor: Crea la cabecera AppCredentials (utiliza parámetros definidos en aywebfwk-proxies.properties). - ayWebFwkCredentialsOutInterceptor: Crea la cabecera Credentials 
+		(utiliza parámetros definidos en aywebfwk-proxies.properties). Si en un proxy es necesario WS-Addressing añadir los siguientes interceptores en la configuración del proxy: <property name="outInterceptors"> 
+		<list> <ref bean="ayWebFwkMapAggregator" /> <ref bean="ayWebFwkMapCodec" /> </list> </property> -->
+
+
+	<!-- Cliente ComunicacionesProxy v1.0 -->
+
+	<bean id="proxyFactoryComunicaciones" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+
+		<property name="bus" ref="aywebfwk-cxf-default-bus" />
+
+		<property name="serviceClass" value="es.valencia.services.esb.comunicacioneselectronicas.v20.ComunicacionesElectronicasPortType" />
+
+		<property name="address" value="${aywebfwk.proxies.comunicaciones.address}" />
+
+		<property name="outInterceptors">
+			<list>
+				<ref bean="ayWebFwkMapAggregator" />
+				<ref bean="ayWebFwkMapCodec" />
+			</list>
+		</property>
+
+	</bean>
+
+	<!-- Cliente UnidadesOrganizativas -->
+
+	<!-- Las siguientes lineas permiten especificar el ReceiveTimeout para un proxy en concreto. -->
+	<http-conf:conduit name="{http://www.valencia.es/services/nieDomain/UnidadesOrganizativas/v20}UnidadesOrganizativasPortTypePort.http-conduit">
+		<http-conf:client ReceiveTimeout="${aywebfwk.proxies.unidadesorganizativassoa.receivetimeout}" />
+	</http-conf:conduit>
+
+
+	<bean id="proxyFactoryUnidadesOrganizativasSoa" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+
+		<property name="bus" ref="aywebfwk-cxf-default-bus" />
+
+		<property name="serviceClass" value="es.valencia.services.niedomain.unidadesorganizativas.v20.UnidadesOrganizativasPortType" />
+
+		<property name="address" value="${aywebfwk.proxies.unidadesorganizativassoa.address}" />
+
+	</bean>
+</beans>

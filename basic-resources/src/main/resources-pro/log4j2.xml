@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration status="warn">
+
+	<Properties>
+		<Property name="patternConsole">%d{dd/MM/yyyy HH:mm:ss} %5p %X{cxfId} %c{3}: %M:%L - %m%n</Property>
+		<Property name="patternFile">%d{dd/MM/yyyy HH:mm:ss} %5p %X{cxf.exchangeId} %X{userName} %c{3}: %M:%L - %m%n</Property>
+		<Property name="logFileName">/var/log/apps/${project.parent.artifactId}_${map:hostName}.log</Property>
+		<Property name="logFilePattern">/var/log/apps/${project.parent.artifactId}_${map:hostName}-%i.log</Property>
+	</Properties>
+
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${sys:patternConsole}" />
+		</Console>
+
+		<RollingFile name="rollingFilelog" fileName="${sys:logFileName}" filePattern="${sys:logFilePattern}">
+			<PatternLayout pattern="${sys:patternFile}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="19500KB" />
+			</Policies>
+			<DefaultRolloverStrategy max="10" />
+		</RollingFile>
+
+		<Gelf name="graylog" host="udp:172.22.1.14" port="12201" version="1.1" extractStackTrace="true" filterStackTrace="true" mdcProfiling="true" includeFullMdc="false"
+			maximumMessageSize="8192" originHost="%host{fqdn}" additionalFieldTypes="app=String,env=String,origen=String">
+
+			<Field name="timestamp" pattern="%d{dd MMM yyyy HH:mm:ss,SSS}" />
+			<Field name="level" pattern="%level" />
+			<Field name="simpleClassName" pattern="%C{1}" />
+			<Field name="className" pattern="%C" />
+			<Field name="server" pattern="%host" />
+			<Field name="thread" pattern="%t" />
+
+
+			<Field name="app" literal="basic" />
+			<Field name="env" literal="pro" />
+			<Field name="origen" literal="app" />
+			<Field name="username" pattern="%X{userName}" />
+			<Field name="cxf.exchangeId" pattern="%X{cxf.exchangeId}" />
+			<Field name="cxf.operation" pattern="%X{cxf.operation}" />
+			<Field name="fwk.cxf.id" pattern="%X{fwk.cxf.id}" />
+			<Field name="threadName" pattern="%t" />
+
+		</Gelf>
+
+	</Appenders>
+
+
+	<Loggers>
+
+		<Logger name="es.valencia" level="INFO" />
+		<Logger name="es.valencia.aytowebfwk.security" level="FATAL" />
+
+
+		<Logger name="org.hibernate" level="ERROR" />
+		<Logger name="org.springframework" level="ERROR" />
+		<Logger name=" org.primefaces" level="ERROR" />
+		<Logger name="org.dozer" level="ERROR" />
+
+		<Logger name="jdbc.sqlonly" level="ERROR" />
+		<Logger name="jdbc.sqltiming" level="ERROR" />
+		<Logger name="jdbc.audit" level="OFF" />
+		<Logger name="jdbc.resultset" level="ERROR" />
+		<Logger name="jdbc.connection" level="ERROR" />
+		<Logger name="jdbc.resultsettable" level="OFF" />
+
+		<Root level="info" additivity="false">
+			<AppenderRef ref="rollingFilelog" />
+			<AppenderRef ref="graylog" />
+		</Root>
+
+	</Loggers>
+
+</Configuration>

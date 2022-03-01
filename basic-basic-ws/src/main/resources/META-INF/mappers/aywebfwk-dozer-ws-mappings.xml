@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+
+
+
+
+	<mapping>
+		<class-a>es.valencia.schema.nie.comunicacion.ListaDestinoBaseTypeV10
+		</class-a>
+		<class-b>es.valencia.entity.ListaDestino</class-b>
+
+		<field>
+			<a>nombre</a>
+			<b>nombreCas</b>
+		</field>
+
+		<field>
+			<a>descripcion</a>
+			<b>descripcion</b>
+		</field>
+
+		<field>
+			<a>uidUnidadPropietaria</a>
+			<b>unidadPropietaria.uid</b>
+		</field>
+
+	</mapping>
+
+
+	<mapping>
+		<class-a>es.valencia.schema.nie.comunicacion.UnidadOrganizativaBaseTypeV11
+		</class-a>
+		<class-b>es.valencia.entity.UnidadOrganizativaBDO</class-b>
+
+		<field>
+			<a>nombreCas</a>
+			<b>nombreUnidadCas</b>
+		</field>
+
+		<field>
+			<a>nombreVal</a>
+			<b>nombreUnidadVal</b>
+		</field>
+
+	</mapping>
+
+
+	<mapping map-id="AddOrUpdateUnidadRequestTypeV20Mapping">
+		<class-a bean-factory="org.dozer.factory.JAXBBeanFactory">es.valencia.services.nie.unidadesorganizativas.AddOrUpdateUnidadRequestTypeV20</class-a>
+		<class-b>java.util.Map</class-b>
+
+		<field>
+			<a>emisoraNI.value</a>
+			<b>emisoraNI</b>
+		</field>
+
+		<field>
+			<a>receptoraNI.value</a>
+			<b>receptoraNI</b>
+		</field>
+
+		<field>
+			<a is-accessible="true">emisoraNI.ambitoRestringido</a>
+			<b>ambitoRestringidoEnvio</b>
+		</field>
+
+		<field>
+			<a is-accessible="true">receptoraNI.ambitoRestringido</a>
+			<b>ambitoRestringidoRecepcion</b>
+		</field>
+
+		<field>
+			<a is-accessible="true">receptoraNI.redireccionBuzon</a>
+			<b>redireccionBuzon</b>
+		</field>
+
+		<field>
+			<a get-method="isPrimerNivel">primerNivel</a>
+			<b>primerNivel</b>
+		</field>
+		
+		<field custom-converter-id="responsableTypeV20ToMapConverter">
+			<a>sustitutos.sustituto</a>
+			<b>sustitutos</b>
+			<a-hint>es.valencia.schema.nie.common.ResponsableTypeV20</a-hint>
+			<b-hint>java.util.HashMap</b-hint>
+		</field>
+
+		<field map-id="UsuarioTypeV10Mapping">
+			<a>responsable.value</a>
+			<b>responsable</b>
+		</field>
+
+		<field>
+			<a get-method="isVigente">vigente</a>
+			<b>vigente</b>
+		</field>
+
+		<field>
+			<a is-accessible="true">nombreCargoCas.value</a>
+			<b>nombreCargoCas</b>
+		</field>
+
+		<field>
+			<a is-accessible="true">nombreCargoVal.value</a>
+			<b>nombreCargoVal</b>
+		</field>
+		
+		<field>
+			<a>uidPadre.value</a>
+			<b>uidPadre</b>
+		</field>
+		
+		<field-exclude>
+			<a>nombreCargoCas</a>
+			<b>nombreCargoCas</b>
+		</field-exclude>
+
+		<field-exclude>
+			<a>nombreCargoVal</a>
+			<b>nombreCargoVal</b>
+		</field-exclude>
+
+		<field-exclude>
+			<a>uidPadre</a>
+			<b>uidPadre</b>
+		</field-exclude>
+
+		<field-exclude>
+			<a>responsable</a>
+			<b>responsable</b>
+		</field-exclude>
+
+		<field-exclude>
+			<a>sustitutos</a>
+			<b>sustitutos</b>
+		</field-exclude>
+
+	</mapping>
+
+	<mapping map-id="UsuarioTypeV10Mapping">
+		<class-a>es.valencia.schema.nie.common.UsuarioTypeV10</class-a>
+		<class-b>java.util.Map</class-b>
+	</mapping>
+
+	<mapping type="one-way">
+
+		<class-a>es.valencia.entity.UnidadOrganizativaBDO</class-a>
+		<class-b>es.valencia.schema.nie.unidadorganizativa.UnidadOrganizativaTypeV12</class-b>
+
+		<field>
+			<a>unidadPadre.uid</a>
+			<b>uidPadre</b>
+		</field>
+
+		<field>
+			<a>emisoraNI</a>
+			<b>emisoraNI.value</b>
+		</field>
+		<field>
+			<a>receptoraNI</a>
+			<b>receptoraNI.value</b>
+		</field>
+
+	</mapping>
+
+	<mapping type="one-way">
+
+		<class-a>es.valencia.entity.UnidadOrganizativaBDO</class-a>
+		<class-b>es.valencia.schema.nie.unidadorganizativa.UnidadOrganizativaTypeV20</class-b>
+
+		<field>
+			<a>unidadPadre.uid</a>
+			<b>uidPadre</b>
+		</field>
+
+		<field>
+			<a>emisoraNI</a>
+			<b>emisoraNI.value</b>
+		</field>
+		<field>
+			<a>receptoraNI</a>
+			<b>receptoraNI.value</b>
+		</field>
+
+		<field>
+			<a>ambitoRestringidoEnvio</a>
+			<b is-accessible="true">emisoraNI.ambitoRestringido</b>
+		</field>
+
+		<field>
+			<a>ambitoRestringidoRecepcion</a>
+			<b is-accessible="true">receptoraNI.ambitoRestringido</b>
+		</field>
+
+		<field>
+			<a>redireccionBuzon.uid</a>
+			<b is-accessible="true">receptoraNI.redireccionBuzon</b>
+		</field>
+
+		<field>
+			<a>responsable.nombreCargoCas</a>
+			<b>nombreCargoCas</b>
+		</field>
+
+		<field>
+			<a>responsable.nombreCargoVal</a>
+			<b>nombreCargoVal</b>
+		</field>
+
+		<field>
+			<a get-method="getSustitutosUnmodifiable">sustitutos</a>
+			<b is-accessible="true">sustitutos.sustituto</b>
+		</field>
+
+
+	</mapping>
+
+	<mapping type="one-way">
+		<class-a>es.valencia.entity.Responsable</class-a>
+		<class-b>es.valencia.schema.nie.common.ResponsableTypeV20</class-b>
+
+		<field>
+			<a>this</a>
+			<b>usuario</b>
+		</field>
+
+	</mapping>
+
+	<mapping>
+
+		<class-a>es.valencia.entity.Responsable</class-a>
+		<class-b>es.valencia.schema.nie.common.UsuarioTypeV11</class-b>
+
+	</mapping>
+
+
+	<mapping>
+		<class-a>es.valencia.schema.nie.listadestinos.ListaDestinosTypeV11</class-a>
+		<class-b>es.valencia.entity.ListaDestino</class-b>
+		<field>
+			<a is-accessible="true">unidades.unidad</a>
+			<b get-method="getListaUnidadesDestinoUnmodifiable">listaUnidadesDestino</b>
+		</field>
+
+		<field>
+			<a>unidadPropietaria</a>
+			<b>unidadPropietaria</b>
+		</field>
+
+		<field>
+			<a>nombreListaCas</a>
+			<b>nombreCas</b>
+		</field>
+
+		<field>
+			<a>nombreListaVal</a>
+			<b>nombreVal</b>
+		</field>
+		<field>
+			<a>descripcion</a>
+			<b>descripcion</b>
+		</field>
+	</mapping>
+
+	<mapping>
+		<class-a bean-factory="VersionV20BeanFactory">es.valencia.services.nie.comunicaciones.ListaDestinoResponseTypeV11</class-a>
+		<class-b>es.valencia.entity.ListaDestino</class-b>
+
+		<field>
+			<a>listaDestino</a>
+			<b>this</b>
+		</field>
+
+	</mapping>
+
+	<mapping>
+		<class-a bean-factory="VersionV20BeanFactory">es.valencia.schema.nie.listadestinos.ListaDestinosBaseTypeV11</class-a>
+		<class-b>es.valencia.entity.ListaDestino</class-b>
+
+		<field>
+			<a>unidadPropietaria</a>
+			<b>unidadPropietaria</b>
+		</field>
+
+		<field>
+			<a>nombreListaCas</a>
+			<b>nombreCas</b>
+		</field>
+
+		<field>
+			<a>nombreListaVal</a>
+			<b>nombreVal</b>
+		</field>
+		<field>
+			<a>descripcion</a>
+			<b>descripcion</b>
+		</field>
+
+	</mapping>
+
+	<mapping>
+		<class-a bean-factory="VersionV20BeanFactory">es.valencia.services.nie.comunicaciones.ListaPerteneceTypeV10</class-a>
+		<class-b>es.valencia.entity.ListaDestino</class-b>
+
+		<field>
+			<a>unidadPropietaria</a>
+			<b>unidadPropietaria.uid</b>
+		</field>
+
+		<field>
+			<a>nombreListaCas</a>
+			<b>nombreCas</b>
+		</field>
+
+		<field>
+			<a>nombreListaVal</a>
+			<b>nombreVal</b>
+		</field>
+
+	</mapping>
+
+
+</mappings> 

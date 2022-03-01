@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:task="http://www.springframework.org/schema/task" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+	    http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+	     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+	     http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+	     http://www.springframework.org/schema/data/jpa
+	     http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
+	default-autowire="byName">
+
+
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSourceApp" />
+
+		<property name="packagesToScan">
+			<list>
+				<value>es.valencia.entity</value>
+
+				<!-- TODO ARQUETIPO Comentar la siguiente linea si no se va a utilizar auditoria de datos con Hibernate Envers -->
+				<value>es.valencia.aytowebfwk.security.hibernate.envers</value>
+				<value>es.valencia.aytowebfwk.view.menu</value>
+			</list>
+		</property>
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+
+		<property name="jpaProperties">
+			<props>
+
+				<!-- SQL dialect -->
+				<prop key="hibernate.dialect">${aywebfwk.db.hibernate.dialect}</prop>
+				<prop key="hibernate.default_schema">${aywebfwk.db.hibernate.default_schema}</prop>
+
+				<prop key="hibernate.hbm2ddl.auto">${aywebfwk.db.hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.generate_statistics">${aywebfwk.db.hibernate.generate_statistics}</prop>
+				<prop key="hibernate.session.events.log">${aywebfwk.db.hibernate.session.events.log}</prop>
+
+				<!-- Enable formatted SQL in the logs -->
+				<prop key="hibernate.show_sql">${aywebfwk.db.hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${aywebfwk.db.hibernate.format_sql}</prop>
+				<prop key="hibernate.use_sql_comments">${aywebfwk.db.hibernate.use_sql_comments}</prop>
+
+				<prop key="org.hibernate.envers.audit_strategy">${aywebfwk.db.hibernate.envers.audit_strategy}</prop>
+				<prop key="org.hibernate.envers.audit_strategy_validity_store_revend_timestamp">${aywebfwk.db.hibernate.envers.audit_strategy_validity_store_revend_timestamp}</prop>
+
+			</props>
+		</property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="nestedTransactionAllowed" value="true" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- Origen de datos -->
+	<bean id="hikariConfigApp" class="com.zaxxer.hikari.HikariConfig">
+
+		<property name="poolName" value="PoolApp-${aywebfwk.security.appname}" />
+
+		<property name="registerMbeans" value="true" />
+
+		<property name="driverClassName" value="${aywebfwk.db.pool.driverClassName}" />
+		<property name="maximumPoolSize" value="${aywebfwk.db.pool.maxPoolSize}" />
+		<property name="idleTimeout" value="${aywebfwk.db.pool.idleTimeout}" />
+		<property name="maxLifetime" value="${aywebfwk.db.pool.maxLifetime}" />
+		<property name="minimumIdle" value="${aywebfwk.db.pool.minimumIdle}" />
+
+
+		<property name="jdbcUrl" value="${aywebfwk.db.pool.jdbcUrl}" />
+		<property name="username" value="${aywebfwk.db.pool.username}" />
+		<property name="password" value="${aywebfwk.db.pool.password}" />
+
+	</bean>
+
+	<!-- HikariCP configuration -->
+	<bean id="dataSourceApp" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfigApp" />
+	</bean>
+
+	<jpa:repositories base-package="es.valencia" />
+
+</beans>

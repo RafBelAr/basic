@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="true"
+	monitoring="autodetect" dynamicConfig="true">
+
+	<diskStore path="java.io.tmpdir" />
+	
+	<!-- TODO ARQUETIPO establecer la configuración de la cache de ACLs más adecuada para nuestra aplicación. -->
+		
+	<cache name="aclCacheAyWebFwk"
+		
+		maxElementsInMemory="10000" 
+		
+		eternal="false" 
+		
+		timeToIdleSeconds="240" 
+		timeToLiveSeconds="240"
+		
+		overflowToDisk="false"
+		diskPersistent="false" 
+		diskExpiryThreadIntervalSeconds="240"
+		
+		memoryStoreEvictionPolicy="LRU"
+		
+		statistics="true" />
+
+</ehcache>
